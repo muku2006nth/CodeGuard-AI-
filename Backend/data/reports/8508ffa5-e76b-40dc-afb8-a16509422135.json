@@ -1,0 +1,48 @@
+{
+  "report_id": "8508ffa5-e76b-40dc-afb8-a16509422135",
+  "risk_score": 45,
+  "severity": "MEDIUM",
+  "findings": [
+    {
+      "id": "035400af-032",
+      "category": "RESOURCE_LEAK",
+      "severity": "MEDIUM",
+      "confidence": 0.7,
+      "line_number": 3,
+      "description": "File opened without context manager (possible leak).",
+      "remediation": "Use `with open(...) as f:` to ensure closure.",
+      "code_snippet": "with open(",
+      "source": "regex",
+      "rule_id": "regex-leak-001",
+      "what_is_wrong": "Resources are not reliably closed on all paths.",
+      "why_dangerous": "Exhaustion leads to denial of service.",
+      "real_world_impact": "File descriptor exhaustion, memory growth, outages.",
+      "secure_example": "with open(path) as f: data = f.read()"
+    }
+  ],
+  "summary": "Analysis complete: risk score 45/100 (MEDIUM). Found 1 issue(s) across 1 categories. ML suspicious probability: 99%.",
+  "recommendations": [
+    "[MEDIUM] RESOURCE_LEAK: Use `with open(...) as f:` to ensure closure."
+  ],
+  "ml_score": {
+    "risk_probability": 0.99,
+    "suspicious_score": 0.99,
+    "is_suspicious": true,
+    "provider": "codebert"
+  },
+  "language": "python",
+  "latency_seconds": 7.4819371000048704,
+  "metadata": {
+    "scanners": {
+      "regex": 1,
+      "semgrep": 0,
+      "bandit": 0
+    },
+    "risk_breakdown": {
+      "finding_component": 10.5,
+      "ml_component": 34.65,
+      "ml_probability": 0.99
+    }
+  },
+  "created_at": "2026-06-02T09:21:45.295367+00:00"
+}

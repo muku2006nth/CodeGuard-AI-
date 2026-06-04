@@ -1,0 +1,48 @@
+{
+  "report_id": "3f86e6f4-f7fd-4867-b1e6-e1a581a145d3",
+  "risk_score": 27,
+  "severity": "HIGH",
+  "findings": [
+    {
+      "id": "2a33920f-009",
+      "category": "HARDCODED_SECRET",
+      "severity": "HIGH",
+      "confidence": 0.87,
+      "line_number": 1,
+      "description": "Hardcoded credential or secret in source.",
+      "remediation": "Load secrets from environment or secret manager.",
+      "code_snippet": "API_KEY = \"abcdef123456\"",
+      "source": "regex",
+      "rule_id": "regex-secret-001",
+      "what_is_wrong": "Credentials or tokens are embedded in source code.",
+      "why_dangerous": "Secrets in repos are scraped by bots and abused at scale.",
+      "real_world_impact": "Account takeover, cloud resource abuse, compliance violations.",
+      "secure_example": "api_key = os.environ[\"API_KEY\"]"
+    }
+  ],
+  "summary": "Analysis complete: risk score 27/100 (HIGH). Found 1 issue(s) across 1 categories. ML suspicious probability: 5%.",
+  "recommendations": [
+    "[HIGH] HARDCODED_SECRET: Load secrets from environment or secret manager."
+  ],
+  "ml_score": {
+    "risk_probability": 0.05,
+    "suspicious_score": 0.05,
+    "is_suspicious": false,
+    "provider": "mock"
+  },
+  "language": "python",
+  "latency_seconds": 0.019740300020202994,
+  "metadata": {
+    "scanners": {
+      "regex": 1,
+      "semgrep": 0,
+      "bandit": 0
+    },
+    "risk_breakdown": {
+      "finding_component": 26.1,
+      "ml_component": 1.75,
+      "ml_probability": 0.05
+    }
+  },
+  "created_at": "2026-06-01T13:47:35.282601+00:00"
+}

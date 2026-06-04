@@ -1,0 +1,9 @@
+.venv/
+__pycache__/
+*.pyc
+.env
+Backend/data/chroma_db/
+Backend/models/codebert-vuln/*
+!Backend/models/codebert-vuln/.gitkeep
+.pytest_cache/
+*.egg-info/

@@ -1,0 +1,31 @@
+{
+  "report_id": "e317eb07-7a0e-48c6-a9e9-fdaa3edd80f3",
+  "risk_score": 34,
+  "severity": "MEDIUM",
+  "findings": [],
+  "summary": "Analysis complete: risk score 34/100 (MEDIUM). Found 0 issue(s) across 0 categories. ML suspicious probability: 99%.",
+  "recommendations": [
+    "No critical findings \u2014 maintain input validation and dependency updates."
+  ],
+  "ml_score": {
+    "risk_probability": 0.99,
+    "suspicious_score": 0.99,
+    "is_suspicious": true,
+    "provider": "codebert"
+  },
+  "language": "python",
+  "latency_seconds": 7.668512800009921,
+  "metadata": {
+    "scanners": {
+      "regex": 0,
+      "semgrep": 0,
+      "bandit": 0
+    },
+    "risk_breakdown": {
+      "finding_component": 0.0,
+      "ml_component": 34.65,
+      "ml_probability": 0.99
+    }
+  },
+  "created_at": "2026-06-02T09:20:04.800116+00:00"
+}

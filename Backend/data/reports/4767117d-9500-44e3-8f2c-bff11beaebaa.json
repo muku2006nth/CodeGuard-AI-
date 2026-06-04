@@ -1,0 +1,48 @@
+{
+  "report_id": "4767117d-9500-44e3-8f2c-bff11beaebaa",
+  "risk_score": 61,
+  "severity": "CRITICAL",
+  "findings": [
+    {
+      "id": "8e6cf9ac-f61",
+      "category": "API_KEY_EXPOSURE",
+      "severity": "CRITICAL",
+      "confidence": 0.95,
+      "line_number": 1,
+      "description": "Exposed cloud API key pattern.",
+      "remediation": "Rotate key; use IAM roles; never commit keys.",
+      "code_snippet": "AWS_SECRET_KEY = \"AKIA123456789ABCDEFG\"",
+      "source": "regex",
+      "rule_id": "regex-apikey-001",
+      "what_is_wrong": "A security anti-pattern was detected in this code region.",
+      "why_dangerous": "It may violate secure coding standards and enable exploitation.",
+      "real_world_impact": "Impact depends on context; treat as security debt until reviewed.",
+      "secure_example": "# Apply principle of least privilege and input validation"
+    }
+  ],
+  "summary": "Analysis complete: risk score 61/100 (CRITICAL). Found 1 issue(s) across 1 categories. ML suspicious probability: 54%.",
+  "recommendations": [
+    "[CRITICAL] API_KEY_EXPOSURE: Rotate key; use IAM roles; never commit keys."
+  ],
+  "ml_score": {
+    "risk_probability": 0.5376,
+    "suspicious_score": 0.5376,
+    "is_suspicious": false,
+    "provider": "codebert"
+  },
+  "language": "python",
+  "latency_seconds": 8.075077100016642,
+  "metadata": {
+    "scanners": {
+      "regex": 1,
+      "semgrep": 0,
+      "bandit": 0
+    },
+    "risk_breakdown": {
+      "finding_component": 42.75,
+      "ml_component": 18.82,
+      "ml_probability": 0.5376259684562683
+    }
+  },
+  "created_at": "2026-06-02T09:19:41.397742+00:00"
+}

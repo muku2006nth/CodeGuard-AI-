@@ -1,0 +1,130 @@
+{
+  "report_id": "3332fc6a-9458-408b-ace9-739165f6a959",
+  "risk_score": 100,
+  "severity": "CRITICAL",
+  "findings": [
+    {
+      "id": "ae3d7c23-c41",
+      "category": "COMMAND_INJECTION",
+      "severity": "CRITICAL",
+      "confidence": 0.92,
+      "line_number": 7,
+      "description": "OS command execution with potential user-controlled input.",
+      "remediation": "Avoid shell=True; use argument lists; validate allowlists.",
+      "code_snippet": "os.system(cmd)",
+      "source": "regex",
+      "rule_id": "regex-cmd-001",
+      "what_is_wrong": "Shell commands include unsanitized user input.",
+      "why_dangerous": "Attackers execute arbitrary OS commands on the server.",
+      "real_world_impact": "Remote code execution, ransomware deployment, lateral movement.",
+      "secure_example": "subprocess.run([\"ping\", \"-c\", \"1\", host], check=True)"
+    },
+    {
+      "id": "823e59f1-4d5",
+      "category": "COMMAND_INJECTION",
+      "severity": "CRITICAL",
+      "confidence": 0.88,
+      "line_number": 7,
+      "description": "os.system() executes a shell command. If the argument is user-controlled, this leads to command injection (CWE-78). Use subprocess with shell=False instead.\n",
+      "remediation": "Follow Semgrep rule guidance; apply secure coding pattern.",
+      "code_snippet": "requires login",
+      "source": "semgrep",
+      "rule_id": "app.security.semgrep_rules.custom.command-injection-os-system",
+      "what_is_wrong": "Shell commands include unsanitized user input.",
+      "why_dangerous": "Attackers execute arbitrary OS commands on the server.",
+      "real_world_impact": "Remote code execution, ransomware deployment, lateral movement.",
+      "secure_example": "subprocess.run([\"ping\", \"-c\", \"1\", host], check=True)"
+    },
+    {
+      "id": "5ec74c1f-07f",
+      "category": "UNSAFE_DESERIALIZATION",
+      "severity": "CRITICAL",
+      "confidence": 0.93,
+      "line_number": 9,
+      "description": "Unsafe deserialization of untrusted data.",
+      "remediation": "Use yaml.safe_load; never unpickle untrusted bytes.",
+      "code_snippet": "data = pickle.loads(input())",
+      "source": "regex",
+      "rule_id": "regex-deser-001",
+      "what_is_wrong": "Untrusted serialized objects are deserialized.",
+      "why_dangerous": "Gadget chains can lead to arbitrary code execution.",
+      "real_world_impact": "Full server compromise via malicious payloads.",
+      "secure_example": "data = json.loads(payload); validate(data, schema)"
+    },
+    {
+      "id": "301659b4-813",
+      "category": "UNSAFE_DESERIALIZATION",
+      "severity": "CRITICAL",
+      "confidence": 0.88,
+      "line_number": 9,
+      "description": "Deserializing untrusted data with pickle can lead to arbitrary code execution. Use safer alternatives like json.\n",
+      "remediation": "Follow Semgrep rule guidance; apply secure coding pattern.",
+      "code_snippet": "requires login",
+      "source": "semgrep",
+      "rule_id": "app.security.semgrep_rules.custom.pickle-deserialization",
+      "what_is_wrong": "Untrusted serialized objects are deserialized.",
+      "why_dangerous": "Gadget chains can lead to arbitrary code execution.",
+      "real_world_impact": "Full server compromise via malicious payloads.",
+      "secure_example": "data = json.loads(payload); validate(data, schema)"
+    },
+    {
+      "id": "facabf9f-a46",
+      "category": "CODE_INJECTION",
+      "severity": "CRITICAL",
+      "confidence": 0.94,
+      "line_number": 11,
+      "description": "Dynamic code execution (eval/exec).",
+      "remediation": "Remove eval/exec; use safe parsers or explicit logic.",
+      "code_snippet": "eval(input())",
+      "source": "regex",
+      "rule_id": "regex-codeinj-001",
+      "what_is_wrong": "Dynamic execution of code from strings (eval/exec).",
+      "why_dangerous": "Any input can become executable attacker code.",
+      "real_world_impact": "Complete application compromise.",
+      "secure_example": "# Use ast.literal_eval only for literals, or structured parsers"
+    },
+    {
+      "id": "6c4e6ece-835",
+      "category": "CODE_INJECTION",
+      "severity": "CRITICAL",
+      "confidence": 0.88,
+      "line_number": 11,
+      "description": "eval() executes arbitrary Python expressions. If the argument is user-controlled, this leads to code injection.\n",
+      "remediation": "Follow Semgrep rule guidance; apply secure coding pattern.",
+      "code_snippet": "requires login",
+      "source": "semgrep",
+      "rule_id": "app.security.semgrep_rules.custom.eval-injection",
+      "what_is_wrong": "Dynamic execution of code from strings (eval/exec).",
+      "why_dangerous": "Any input can become executable attacker code.",
+      "real_world_impact": "Complete application compromise.",
+      "secure_example": "# Use ast.literal_eval only for literals, or structured parsers"
+    }
+  ],
+  "summary": "Analysis complete: risk score 100/100 (CRITICAL). Found 6 issue(s) across 3 categories. ML suspicious probability: 85%.",
+  "recommendations": [
+    "[CRITICAL] COMMAND_INJECTION: Avoid shell=True; use argument lists; validate allowlists.",
+    "[CRITICAL] UNSAFE_DESERIALIZATION: Use yaml.safe_load; never unpickle untrusted bytes.",
+    "[CRITICAL] CODE_INJECTION: Remove eval/exec; use safe parsers or explicit logic."
+  ],
+  "ml_score": {
+    "risk_probability": 0.851,
+    "suspicious_score": 0.851,
+    "is_suspicious": true,
+    "provider": "codebert"
+  },
+  "language": "python",
+  "latency_seconds": 8.234083599993028,
+  "metadata": {
+    "scanners": {
+      "regex": 3,
+      "semgrep": 3,
+      "bandit": 0
+    },
+    "risk_breakdown": {
+      "finding_component": 244.35,
+      "ml_component": 29.79,
+      "ml_probability": 0.8510326743125916
+    }
+  },
+  "created_at": "2026-06-02T09:23:11.757246+00:00"
+}

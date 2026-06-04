@@ -1,0 +1,6 @@
+{
+  "dataset": "DetectVul/devign",
+  "accuracy": null,
+  "f1": null,
+  "note": "Run python src/evaluate.py after Colab training."
+}

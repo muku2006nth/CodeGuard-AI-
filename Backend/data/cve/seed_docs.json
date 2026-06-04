@@ -1,0 +1,42 @@
+[
+  {
+    "id": "owasp-a03-0",
+    "text": "OWASP A03:2021 Injection. Injection flaws occur when untrusted data is sent to an interpreter as part of a command or query. SQL injection, NoSQL injection, OS command injection, and LDAP injection are common. Prevention: use parameterized queries, ORMs, input validation, and least privilege database accounts.",
+    "metadata": {
+      "source": "OWASP",
+      "category": "A03:2021 Injection",
+      "severity": "HIGH",
+      "cve_id": null
+    }
+  },
+  {
+    "id": "owasp-a07-0",
+    "text": "OWASP A07:2021 Cross-Site Scripting (XSS). XSS flaws occur whenever an application includes untrusted data in a web page without proper validation or escaping. Use context-aware output encoding, Content Security Policy, and frameworks that auto-escape by default.",
+    "metadata": {
+      "source": "OWASP",
+      "category": "A07:2021 XSS",
+      "severity": "HIGH",
+      "cve_id": null
+    }
+  },
+  {
+    "id": "cwe-89-0",
+    "text": "CWE-89 Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection'). The application constructs SQL commands using externally-influenced input without neutralizing special elements. Mitigation: prepared statements and parameterized queries.",
+    "metadata": {
+      "source": "OWASP",
+      "category": "CWE-89",
+      "severity": "CRITICAL",
+      "cve_id": null
+    }
+  },
+  {
+    "id": "cve-sample-2023-0",
+    "text": "CVE-2023-1234 (sample): A web application fails to sanitize user input in a database query, allowing attackers to execute arbitrary SQL. Affected components include login forms using string concatenation. Upgrade to parameterized queries and apply WAF rules.",
+    "metadata": {
+      "source": "NVD",
+      "category": "SQL injection",
+      "severity": "CRITICAL",
+      "cve_id": "CVE-2023-1234"
+    }
+  }
+]

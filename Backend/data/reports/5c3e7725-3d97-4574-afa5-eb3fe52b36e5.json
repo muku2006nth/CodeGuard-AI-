@@ -1,0 +1,64 @@
+{
+  "report_id": "5c3e7725-3d97-4574-afa5-eb3fe52b36e5",
+  "risk_score": 95,
+  "severity": "CRITICAL",
+  "findings": [
+    {
+      "id": "45aa8778-ce5",
+      "category": "UNSAFE_DESERIALIZATION",
+      "severity": "CRITICAL",
+      "confidence": 0.93,
+      "line_number": 3,
+      "description": "Unsafe deserialization of untrusted data.",
+      "remediation": "Use yaml.safe_load; never unpickle untrusted bytes.",
+      "code_snippet": "data = pickle.loads(user_input)",
+      "source": "regex",
+      "rule_id": "regex-deser-001",
+      "what_is_wrong": "Untrusted serialized objects are deserialized.",
+      "why_dangerous": "Gadget chains can lead to arbitrary code execution.",
+      "real_world_impact": "Full server compromise via malicious payloads.",
+      "secure_example": "data = json.loads(payload); validate(data, schema)"
+    },
+    {
+      "id": "3ffef87d-52f",
+      "category": "UNSAFE_DESERIALIZATION",
+      "severity": "CRITICAL",
+      "confidence": 0.88,
+      "line_number": 3,
+      "description": "Deserializing untrusted data with pickle can lead to arbitrary code execution. Use safer alternatives like json.\n",
+      "remediation": "Follow Semgrep rule guidance; apply secure coding pattern.",
+      "code_snippet": "requires login",
+      "source": "semgrep",
+      "rule_id": "app.security.semgrep_rules.custom.pickle-deserialization",
+      "what_is_wrong": "Untrusted serialized objects are deserialized.",
+      "why_dangerous": "Gadget chains can lead to arbitrary code execution.",
+      "real_world_impact": "Full server compromise via malicious payloads.",
+      "secure_example": "data = json.loads(payload); validate(data, schema)"
+    }
+  ],
+  "summary": "Analysis complete: risk score 95/100 (CRITICAL). Found 2 issue(s) across 1 categories. ML suspicious probability: 40%.",
+  "recommendations": [
+    "[CRITICAL] UNSAFE_DESERIALIZATION: Use yaml.safe_load; never unpickle untrusted bytes."
+  ],
+  "ml_score": {
+    "risk_probability": 0.4,
+    "suspicious_score": 0.4,
+    "is_suspicious": false,
+    "provider": "mock"
+  },
+  "language": "python",
+  "latency_seconds": 3.7399585000239313,
+  "metadata": {
+    "scanners": {
+      "regex": 1,
+      "semgrep": 1,
+      "bandit": 0
+    },
+    "risk_breakdown": {
+      "finding_component": 81.45,
+      "ml_component": 14.0,
+      "ml_probability": 0.39999999999999997
+    }
+  },
+  "created_at": "2026-06-02T06:15:56.260979+00:00"
+}

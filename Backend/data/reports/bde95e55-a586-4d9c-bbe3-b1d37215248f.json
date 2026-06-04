@@ -1,0 +1,64 @@
+{
+  "report_id": "bde95e55-a586-4d9c-bbe3-b1d37215248f",
+  "risk_score": 80,
+  "severity": "CRITICAL",
+  "findings": [
+    {
+      "id": "34335843-9d5",
+      "category": "COMMAND_INJECTION",
+      "severity": "CRITICAL",
+      "confidence": 0.92,
+      "line_number": 4,
+      "description": "OS command execution with potential user-controlled input.",
+      "remediation": "Avoid shell=True; use argument lists; validate allowlists.",
+      "code_snippet": "subprocess.call(cmd, shell=True)",
+      "source": "regex",
+      "rule_id": "regex-cmd-001",
+      "what_is_wrong": "Shell commands include unsanitized user input.",
+      "why_dangerous": "Attackers execute arbitrary OS commands on the server.",
+      "real_world_impact": "Remote code execution, ransomware deployment, lateral movement.",
+      "secure_example": "subprocess.run([\"ping\", \"-c\", \"1\", host], check=True)"
+    },
+    {
+      "id": "d50f7ae4-fc3",
+      "category": "COMMAND_INJECTION",
+      "severity": "HIGH",
+      "confidence": 0.88,
+      "line_number": 4,
+      "description": "subprocess.call() executes external commands. If the argument is user-controlled, this can lead to command injection (CWE-78). Validate and sanitize all inputs before passing to subprocess.\n",
+      "remediation": "Follow Semgrep rule guidance; apply secure coding pattern.",
+      "code_snippet": "requires login",
+      "source": "semgrep",
+      "rule_id": "app.security.semgrep_rules.custom.command-injection-subprocess-call",
+      "what_is_wrong": "Shell commands include unsanitized user input.",
+      "why_dangerous": "Attackers execute arbitrary OS commands on the server.",
+      "real_world_impact": "Remote code execution, ransomware deployment, lateral movement.",
+      "secure_example": "subprocess.run([\"ping\", \"-c\", \"1\", host], check=True)"
+    }
+  ],
+  "summary": "Analysis complete: risk score 80/100 (CRITICAL). Found 2 issue(s) across 1 categories. ML suspicious probability: 37%.",
+  "recommendations": [
+    "[CRITICAL] COMMAND_INJECTION: Avoid shell=True; use argument lists; validate allowlists."
+  ],
+  "ml_score": {
+    "risk_probability": 0.37,
+    "suspicious_score": 0.37,
+    "is_suspicious": false,
+    "provider": "mock"
+  },
+  "language": "python",
+  "latency_seconds": 6.6524948999867775,
+  "metadata": {
+    "scanners": {
+      "regex": 1,
+      "semgrep": 2,
+      "bandit": 0
+    },
+    "risk_breakdown": {
+      "finding_component": 67.8,
+      "ml_component": 12.95,
+      "ml_probability": 0.37
+    }
+  },
+  "created_at": "2026-06-01T19:23:34.365170+00:00"
+}

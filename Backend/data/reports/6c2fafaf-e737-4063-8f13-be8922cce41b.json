@@ -1,0 +1,65 @@
+{
+  "report_id": "6c2fafaf-e737-4063-8f13-be8922cce41b",
+  "risk_score": 90,
+  "severity": "CRITICAL",
+  "findings": [
+    {
+      "id": "4c975824-328",
+      "category": "COMMAND_INJECTION",
+      "severity": "CRITICAL",
+      "confidence": 0.92,
+      "line_number": 5,
+      "description": "OS command execution with potential user-controlled input.",
+      "remediation": "Avoid shell=True; use argument lists; validate allowlists.",
+      "code_snippet": "os.system(user_input)",
+      "source": "regex",
+      "rule_id": "regex-cmd-001",
+      "what_is_wrong": "Shell commands include unsanitized user input.",
+      "why_dangerous": "Attackers execute arbitrary OS commands on the server.",
+      "real_world_impact": "Remote code execution, ransomware deployment, lateral movement.",
+      "secure_example": "subprocess.run([\"ping\", \"-c\", \"1\", host], check=True)"
+    },
+    {
+      "id": "4208a926-47e",
+      "category": "HARDCODED_SECRET",
+      "severity": "HIGH",
+      "confidence": 0.87,
+      "line_number": 7,
+      "description": "Hardcoded credential or secret in source.",
+      "remediation": "Load secrets from environment or secret manager.",
+      "code_snippet": "password = \"hardcoded_secret\"",
+      "source": "regex",
+      "rule_id": "regex-secret-001",
+      "what_is_wrong": "Credentials or tokens are embedded in source code.",
+      "why_dangerous": "Secrets in repos are scraped by bots and abused at scale.",
+      "real_world_impact": "Account takeover, cloud resource abuse, compliance violations.",
+      "secure_example": "api_key = os.environ[\"API_KEY\"]"
+    }
+  ],
+  "summary": "Analysis complete: risk score 90/100 (CRITICAL). Found 2 issue(s) across 2 categories. ML suspicious probability: 65%.",
+  "recommendations": [
+    "[CRITICAL] COMMAND_INJECTION: Avoid shell=True; use argument lists; validate allowlists.",
+    "[HIGH] HARDCODED_SECRET: Load secrets from environment or secret manager."
+  ],
+  "ml_score": {
+    "risk_probability": 0.65,
+    "suspicious_score": 0.65,
+    "is_suspicious": false,
+    "provider": "mock"
+  },
+  "language": "python",
+  "latency_seconds": 0.015606999979354441,
+  "metadata": {
+    "scanners": {
+      "regex": 2,
+      "semgrep": 0,
+      "bandit": 0
+    },
+    "risk_breakdown": {
+      "finding_component": 67.5,
+      "ml_component": 22.75,
+      "ml_probability": 0.6499999999999999
+    }
+  },
+  "created_at": "2026-06-01T11:19:52.810446+00:00"
+}

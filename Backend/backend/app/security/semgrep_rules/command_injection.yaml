@@ -1,0 +1,172 @@
+rules:
+  - id: custom.command-injection-subprocess-shell
+    patterns:
+      - pattern: subprocess.$FUNC(..., shell=True, ...)
+    message: >
+      Dangerous use of subprocess with shell=True. User-controlled input
+      passed to a shell command can lead to command injection (CWE-78).
+      Use shell=False and pass arguments as a list instead.
+    languages: [python]
+    severity: ERROR
+    metadata:
+      cwe: "CWE-78"
+      owasp: "A1:2017-Injection"
+      category: command-injection
+      confidence: HIGH
+
+  - id: custom.command-injection-subprocess-call
+    pattern: subprocess.call($ARG, ...)
+    message: >
+      subprocess.call() executes external commands. If the argument is
+      user-controlled, this can lead to command injection (CWE-78).
+      Validate and sanitize all inputs before passing to subprocess.
+    languages: [python]
+    severity: WARNING
+    metadata:
+      cwe: "CWE-78"
+      owasp: "A1:2017-Injection"
+      category: command-injection
+      confidence: MEDIUM
+
+  - id: custom.command-injection-os-system
+    pattern: os.system(...)
+    message: >
+      os.system() executes a shell command. If the argument is
+      user-controlled, this leads to command injection (CWE-78).
+      Use subprocess with shell=False instead.
+    languages: [python]
+    severity: ERROR
+    metadata:
+      cwe: "CWE-78"
+      owasp: "A1:2017-Injection"
+      category: command-injection
+      confidence: HIGH
+
+  - id: custom.command-injection-os-popen
+    pattern: os.popen(...)
+    message: >
+      os.popen() executes a shell command. If the argument includes
+      user-controlled input, this leads to command injection (CWE-78).
+    languages: [python]
+    severity: ERROR
+    metadata:
+      cwe: "CWE-78"
+      owasp: "A1:2017-Injection"
+      category: command-injection
+      confidence: HIGH
+
+  - id: custom.eval-injection
+    pattern: eval(...)
+    message: >
+      eval() executes arbitrary Python expressions. If the argument is
+      user-controlled, this leads to code injection.
+    languages: [python]
+    severity: ERROR
+    metadata:
+      cwe: "CWE-95"
+      category: eval
+      confidence: HIGH
+
+  - id: custom.exec-injection
+    pattern: exec(...)
+    message: >
+      exec() executes arbitrary Python code. If the argument is
+      user-controlled, this leads to code injection.
+    languages: [python]
+    severity: ERROR
+    metadata:
+      cwe: "CWE-95"
+      category: eval
+      confidence: HIGH
+
+  - id: custom.sql-injection-format-string
+    patterns:
+      - pattern: |
+          $CURSOR.execute("..." % ...)
+    message: >
+      SQL query built with string formatting (% operator). This can lead
+      to SQL injection. Use parameterized queries instead.
+    languages: [python]
+    severity: ERROR
+    metadata:
+      cwe: "CWE-89"
+      category: sql-injection
+      confidence: HIGH
+
+  - id: custom.sql-injection-fstring
+    patterns:
+      - pattern: |
+          $CURSOR.execute(f"...")
+    message: >
+      SQL query built with f-string. This can lead to SQL injection.
+      Use parameterized queries instead.
+    languages: [python]
+    severity: ERROR
+    metadata:
+      cwe: "CWE-89"
+      category: sql-injection
+      confidence: HIGH
+
+  - id: custom.hardcoded-password
+    patterns:
+      - pattern: $X = "..."
+      - metavariable-regex:
+          metavariable: $X
+          regex: (?i)(password|passwd|secret|api_key|apikey|token|auth)
+    message: >
+      Potential hardcoded credential detected in variable assignment.
+      Store secrets in environment variables or a secrets manager.
+    languages: [python]
+    severity: WARNING
+    metadata:
+      cwe: "CWE-798"
+      category: hardcoded-secret
+      confidence: MEDIUM
+
+  - id: custom.pickle-deserialization
+    pattern: pickle.loads(...)
+    message: >
+      Deserializing untrusted data with pickle can lead to arbitrary
+      code execution. Use safer alternatives like json.
+    languages: [python]
+    severity: ERROR
+    metadata:
+      cwe: "CWE-502"
+      category: deserialization
+      confidence: HIGH
+
+  - id: custom.yaml-unsafe-load
+    pattern: yaml.load(...) 
+    message: >
+      yaml.load() without Loader parameter can execute arbitrary Python.
+      Use yaml.safe_load() instead.
+    languages: [python]
+    severity: ERROR
+    metadata:
+      cwe: "CWE-502"
+      category: deserialization
+      confidence: HIGH
+
+  - id: custom.weak-hash-md5
+    pattern: hashlib.md5(...)
+    message: >
+      MD5 is a cryptographically weak hash function. Use SHA-256 or
+      stronger algorithms for security-sensitive operations.
+    languages: [python]
+    severity: WARNING
+    metadata:
+      cwe: "CWE-328"
+      category: crypto
+      confidence: HIGH
+
+  - id: custom.weak-hash-sha1
+    pattern: hashlib.sha1(...)
+    message: >
+      SHA-1 is a cryptographically weak hash function. Use SHA-256 or
+      stronger algorithms for security-sensitive operations.
+    languages: [python]
+    severity: WARNING
+    metadata:
+      cwe: "CWE-328"
+      category: crypto
+      confidence: HIGH

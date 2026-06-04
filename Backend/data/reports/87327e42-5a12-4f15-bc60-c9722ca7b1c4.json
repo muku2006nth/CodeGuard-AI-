@@ -1,0 +1,30 @@
+{
+  "report_id": "87327e42-5a12-4f15-bc60-c9722ca7b1c4",
+  "risk_score": 1,
+  "severity": "LOW",
+  "findings": [],
+  "summary": "No significant static security issues detected. ML risk signal is low. Continue secure coding practices.",
+  "recommendations": [
+    "No critical findings \u2014 maintain input validation and dependency updates."
+  ],
+  "ml_score": {
+    "risk_probability": 0.05,
+    "suspicious_score": 0.05,
+    "is_suspicious": false,
+    "provider": "mock"
+  },
+  "language": "python",
+  "latency_seconds": 0.03633679999620654,
+  "metadata": {
+    "scanners": {
+      "regex": 0,
+      "semgrep": 0,
+      "bandit": 0
+    },
+    "risk_breakdown": {
+      "ml": 0.05,
+      "findings": 0
+    }
+  },
+  "created_at": "2026-06-01T10:41:10.737776+00:00"
+}

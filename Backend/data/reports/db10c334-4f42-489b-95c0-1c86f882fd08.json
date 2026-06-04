@@ -1,0 +1,114 @@
+{
+  "report_id": "db10c334-4f42-489b-95c0-1c86f882fd08",
+  "risk_score": 100,
+  "severity": "CRITICAL",
+  "findings": [
+    {
+      "id": "7a737542-26f",
+      "category": "HARDCODED_SECRET",
+      "severity": "HIGH",
+      "confidence": 0.88,
+      "line_number": 3,
+      "description": "Potential hardcoded credential detected in variable assignment. Store secrets in environment variables or a secrets manager.\n",
+      "remediation": "Follow Semgrep rule guidance; apply secure coding pattern.",
+      "code_snippet": "requires login",
+      "source": "semgrep",
+      "rule_id": "app.security.semgrep_rules.custom.hardcoded-password",
+      "what_is_wrong": "Credentials or tokens are embedded in source code.",
+      "why_dangerous": "Secrets in repos are scraped by bots and abused at scale.",
+      "real_world_impact": "Account takeover, cloud resource abuse, compliance violations.",
+      "secure_example": "api_key = os.environ[\"API_KEY\"]"
+    },
+    {
+      "id": "39527925-a1a",
+      "category": "HARDCODED_SECRET",
+      "severity": "HIGH",
+      "confidence": 0.87,
+      "line_number": 3,
+      "description": "Hardcoded credential or secret in source.",
+      "remediation": "Load secrets from environment or secret manager.",
+      "code_snippet": "password = \"admin123\"",
+      "source": "regex",
+      "rule_id": "regex-secret-001",
+      "what_is_wrong": "Credentials or tokens are embedded in source code.",
+      "why_dangerous": "Secrets in repos are scraped by bots and abused at scale.",
+      "real_world_impact": "Account takeover, cloud resource abuse, compliance violations.",
+      "secure_example": "api_key = os.environ[\"API_KEY\"]"
+    },
+    {
+      "id": "d83fbbed-211",
+      "category": "WEAK_CRYPTOGRAPHY",
+      "severity": "HIGH",
+      "confidence": 0.88,
+      "line_number": 4,
+      "description": "MD5 is a cryptographically weak hash function. Use SHA-256 or stronger algorithms for security-sensitive operations.\n",
+      "remediation": "Follow Semgrep rule guidance; apply secure coding pattern.",
+      "code_snippet": "requires login",
+      "source": "semgrep",
+      "rule_id": "app.security.semgrep_rules.custom.weak-hash-md5",
+      "what_is_wrong": "Deprecated or broken crypto primitives are used.",
+      "why_dangerous": "Ciphertext can be broken with modern attacks.",
+      "real_world_impact": "Decryption of sensitive data, forged signatures.",
+      "secure_example": "from cryptography.fernet import Fernet"
+    },
+    {
+      "id": "9133ba0e-227",
+      "category": "WEAK_CRYPTOGRAPHY",
+      "severity": "HIGH",
+      "confidence": 0.85,
+      "line_number": 4,
+      "description": "Weak or deprecated cryptographic primitive.",
+      "remediation": "Use AES-GCM, SHA-256+, and modern libraries.",
+      "code_snippet": "hash = hashlib.md5(password.encode())",
+      "source": "regex",
+      "rule_id": "regex-weakcrypto-001",
+      "what_is_wrong": "Deprecated or broken crypto primitives are used.",
+      "why_dangerous": "Ciphertext can be broken with modern attacks.",
+      "real_world_impact": "Decryption of sensitive data, forged signatures.",
+      "secure_example": "from cryptography.fernet import Fernet"
+    },
+    {
+      "id": "4780b5ab-981",
+      "category": "WEAK_HASHING",
+      "severity": "MEDIUM",
+      "confidence": 0.82,
+      "line_number": 4,
+      "description": "Weak hash for security-sensitive use.",
+      "remediation": "Use bcrypt/argon2 for passwords; SHA-256+ for integrity.",
+      "code_snippet": "hash = hashlib.md5(password.encode())",
+      "source": "regex",
+      "rule_id": "regex-weakhash-001",
+      "what_is_wrong": "A security anti-pattern was detected in this code region.",
+      "why_dangerous": "It may violate secure coding standards and enable exploitation.",
+      "real_world_impact": "Impact depends on context; treat as security debt until reviewed.",
+      "secure_example": "# Apply principle of least privilege and input validation"
+    }
+  ],
+  "summary": "Analysis complete: risk score 100/100 (CRITICAL). Found 5 issue(s) across 3 categories. ML suspicious probability: 47%.",
+  "recommendations": [
+    "[HIGH] HARDCODED_SECRET: Follow Semgrep rule guidance; apply secure coding pattern.",
+    "[HIGH] WEAK_CRYPTOGRAPHY: Follow Semgrep rule guidance; apply secure coding pattern.",
+    "[MEDIUM] WEAK_HASHING: Use bcrypt/argon2 for passwords; SHA-256+ for integrity."
+  ],
+  "ml_score": {
+    "risk_probability": 0.4739,
+    "suspicious_score": 0.4739,
+    "is_suspicious": false,
+    "provider": "codebert"
+  },
+  "language": "python",
+  "latency_seconds": 7.910728799994104,
+  "metadata": {
+    "scanners": {
+      "regex": 3,
+      "semgrep": 2,
+      "bandit": 0
+    },
+    "risk_breakdown": {
+      "finding_component": 116.7,
+      "ml_component": 16.59,
+      "ml_probability": 0.47393399477005005
+    }
+  },
+  "created_at": "2026-06-02T09:22:49.693902+00:00"
+}

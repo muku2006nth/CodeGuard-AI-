@@ -1,0 +1,64 @@
+{
+  "report_id": "5b087852-8279-45c6-bb28-f312a5fbebe6",
+  "risk_score": 100,
+  "severity": "CRITICAL",
+  "findings": [
+    {
+      "id": "3c8b69bf-166",
+      "category": "UNSAFE_DESERIALIZATION",
+      "severity": "CRITICAL",
+      "confidence": 0.93,
+      "line_number": 2,
+      "description": "Unsafe deserialization of untrusted data.",
+      "remediation": "Use yaml.safe_load; never unpickle untrusted bytes.",
+      "code_snippet": "data=pickle.loads(user_input)",
+      "source": "regex",
+      "rule_id": "regex-deser-001",
+      "what_is_wrong": "Untrusted serialized objects are deserialized.",
+      "why_dangerous": "Gadget chains can lead to arbitrary code execution.",
+      "real_world_impact": "Full server compromise via malicious payloads.",
+      "secure_example": "data = json.loads(payload); validate(data, schema)"
+    },
+    {
+      "id": "ccec428e-a05",
+      "category": "UNSAFE_DESERIALIZATION",
+      "severity": "CRITICAL",
+      "confidence": 0.88,
+      "line_number": 2,
+      "description": "Deserializing untrusted data with pickle can lead to arbitrary code execution. Use safer alternatives like json.\n",
+      "remediation": "Follow Semgrep rule guidance; apply secure coding pattern.",
+      "code_snippet": "requires login",
+      "source": "semgrep",
+      "rule_id": "app.security.semgrep_rules.custom.pickle-deserialization",
+      "what_is_wrong": "Untrusted serialized objects are deserialized.",
+      "why_dangerous": "Gadget chains can lead to arbitrary code execution.",
+      "real_world_impact": "Full server compromise via malicious payloads.",
+      "secure_example": "data = json.loads(payload); validate(data, schema)"
+    }
+  ],
+  "summary": "Analysis complete: risk score 100/100 (CRITICAL). Found 2 issue(s) across 1 categories. ML suspicious probability: 77%.",
+  "recommendations": [
+    "[CRITICAL] UNSAFE_DESERIALIZATION: Use yaml.safe_load; never unpickle untrusted bytes."
+  ],
+  "ml_score": {
+    "risk_probability": 0.7678,
+    "suspicious_score": 0.7678,
+    "is_suspicious": true,
+    "provider": "codebert"
+  },
+  "language": "python",
+  "latency_seconds": 7.469719199987594,
+  "metadata": {
+    "scanners": {
+      "regex": 1,
+      "semgrep": 1,
+      "bandit": 0
+    },
+    "risk_breakdown": {
+      "finding_component": 81.45,
+      "ml_component": 26.87,
+      "ml_probability": 0.7677645087242126
+    }
+  },
+  "created_at": "2026-06-02T09:17:21.175470+00:00"
+}

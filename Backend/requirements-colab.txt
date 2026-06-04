@@ -1,0 +1,8 @@
+# Training-only deps for Google Colab (install in notebook)
+transformers>=4.40.0
+torch>=2.1.0
+datasets>=2.18.0
+huggingface_hub>=0.23.0
+scikit-learn>=1.4.0
+numpy>=1.26.0
+accelerate>=0.28.0

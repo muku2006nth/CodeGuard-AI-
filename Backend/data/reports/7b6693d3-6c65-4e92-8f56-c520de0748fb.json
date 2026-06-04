@@ -1,0 +1,48 @@
+{
+  "report_id": "7b6693d3-6c65-4e92-8f56-c520de0748fb",
+  "risk_score": 75,
+  "severity": "CRITICAL",
+  "findings": [
+    {
+      "id": "ec3b6e6b-5c7",
+      "category": "SQL_INJECTION",
+      "severity": "CRITICAL",
+      "confidence": 0.9,
+      "line_number": 7,
+      "description": "SQL query built via string concatenation or formatting.",
+      "remediation": "Use parameterized queries / prepared statements.",
+      "code_snippet": "query = f\"SELECT * FROM users WHERE id = {user_id}\"",
+      "source": "regex",
+      "rule_id": "regex-sqli-001",
+      "what_is_wrong": "User input is concatenated into SQL queries.",
+      "why_dangerous": "Attackers can alter query logic to read, modify, or delete data.",
+      "real_world_impact": "Full database compromise, credential theft, data exfiltration.",
+      "secure_example": "cursor.execute(\"SELECT * FROM users WHERE id = ?\", (user_id,))"
+    }
+  ],
+  "summary": "Analysis complete: risk score 75/100 (CRITICAL). Found 1 issue(s) across 1 categories. ML suspicious probability: 99%.",
+  "recommendations": [
+    "[CRITICAL] SQL_INJECTION: Use parameterized queries / prepared statements."
+  ],
+  "ml_score": {
+    "risk_probability": 0.99,
+    "suspicious_score": 0.99,
+    "is_suspicious": true,
+    "provider": "codebert"
+  },
+  "language": "python",
+  "latency_seconds": 9.817518800031394,
+  "metadata": {
+    "scanners": {
+      "regex": 1,
+      "semgrep": 0,
+      "bandit": 0
+    },
+    "risk_breakdown": {
+      "finding_component": 40.5,
+      "ml_component": 34.65,
+      "ml_probability": 0.99
+    }
+  },
+  "created_at": "2026-06-02T09:15:17.155013+00:00"
+}

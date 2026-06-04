@@ -1,0 +1,64 @@
+{
+  "report_id": "d73c684f-e276-4619-b3f9-26f2a29b6894",
+  "risk_score": 92,
+  "severity": "CRITICAL",
+  "findings": [
+    {
+      "id": "25e4f5e4-c42",
+      "category": "COMMAND_INJECTION",
+      "severity": "CRITICAL",
+      "confidence": 0.92,
+      "line_number": 4,
+      "description": "OS command execution with potential user-controlled input.",
+      "remediation": "Avoid shell=True; use argument lists; validate allowlists.",
+      "code_snippet": "os.system(cmd)",
+      "source": "regex",
+      "rule_id": "regex-cmd-001",
+      "what_is_wrong": "Shell commands include unsanitized user input.",
+      "why_dangerous": "Attackers execute arbitrary OS commands on the server.",
+      "real_world_impact": "Remote code execution, ransomware deployment, lateral movement.",
+      "secure_example": "subprocess.run([\"ping\", \"-c\", \"1\", host], check=True)"
+    },
+    {
+      "id": "ac36a79b-2c6",
+      "category": "COMMAND_INJECTION",
+      "severity": "CRITICAL",
+      "confidence": 0.88,
+      "line_number": 4,
+      "description": "os.system() executes a shell command. If the argument is user-controlled, this leads to command injection (CWE-78). Use subprocess with shell=False instead.\n",
+      "remediation": "Follow Semgrep rule guidance; apply secure coding pattern.",
+      "code_snippet": "requires login",
+      "source": "semgrep",
+      "rule_id": "app.security.semgrep_rules.custom.command-injection-os-system",
+      "what_is_wrong": "Shell commands include unsanitized user input.",
+      "why_dangerous": "Attackers execute arbitrary OS commands on the server.",
+      "real_world_impact": "Remote code execution, ransomware deployment, lateral movement.",
+      "secure_example": "subprocess.run([\"ping\", \"-c\", \"1\", host], check=True)"
+    }
+  ],
+  "summary": "Analysis complete: risk score 92/100 (CRITICAL). Found 2 issue(s) across 1 categories. ML suspicious probability: 33%.",
+  "recommendations": [
+    "[CRITICAL] COMMAND_INJECTION: Avoid shell=True; use argument lists; validate allowlists."
+  ],
+  "ml_score": {
+    "risk_probability": 0.3283,
+    "suspicious_score": 0.3283,
+    "is_suspicious": false,
+    "provider": "codebert"
+  },
+  "language": "python",
+  "latency_seconds": 7.7038760999566875,
+  "metadata": {
+    "scanners": {
+      "regex": 1,
+      "semgrep": 1,
+      "bandit": 0
+    },
+    "risk_breakdown": {
+      "finding_component": 81.0,
+      "ml_component": 11.49,
+      "ml_probability": 0.3282693326473236
+    }
+  },
+  "created_at": "2026-06-02T09:16:24.591049+00:00"
+}
