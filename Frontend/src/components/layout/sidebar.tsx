@@ -35,7 +35,7 @@ export function Sidebar() {
     <div className="flex h-screen w-64 flex-col border-r bg-card px-3 py-4">
       <div className="mb-8 flex items-center px-3">
         <ShieldAlert className="mr-2 h-6 w-6 text-primary" />
-        <span className="text-lg font-bold tracking-tight">AI Security SaaS</span>
+        <span className="text-lg font-bold tracking-tight">CodeGuard AI</span>
       </div>
 
       <nav className="flex-1 space-y-2">
