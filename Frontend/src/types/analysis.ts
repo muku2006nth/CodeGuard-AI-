@@ -22,6 +22,14 @@ export interface MLScore {
   provider: string;
 }
 
+export interface RagChunk {
+  text: string;
+  source: string;
+  cve_id: string;
+  severity: string;
+  score: number;
+}
+
 export interface AnalyzeResponse {
   report_id: string;
   risk_score: number;
@@ -32,6 +40,12 @@ export interface AnalyzeResponse {
   ml_score: MLScore;
   language: string;
   latency_seconds: number;
+  // RAG-enriched fields
+  rag_chunks: RagChunk[];
+  rag_no_match: boolean;
+  fixed_code: string;
+  cve_refs: string[];
+  ai_explanation: string;
 }
 
 export interface ReportSummary {

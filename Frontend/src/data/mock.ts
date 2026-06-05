@@ -93,5 +93,18 @@ export const MOCK_ANALYSIS_RESPONSE: AnalyzeResponse = {
     provider: "mock"
   },
   language: "python",
-  latency_seconds: 1.2
+  latency_seconds: 1.2,
+  rag_chunks: [
+    {
+      text: "CWE-89 Improper Neutralization of Special Elements used in an SQL Command (SQL Injection). The application constructs all or part of an SQL command using externally-influenced input.",
+      source: "OWASP",
+      cve_id: "CWE-89",
+      severity: "CRITICAL",
+      score: 0.67
+    }
+  ],
+  rag_no_match: false,
+  fixed_code: "cursor.execute('SELECT * FROM users WHERE id = ?', (user_id,))",
+  cve_refs: ["CWE-89", "OWASP A03:2021"],
+  ai_explanation: "The code uses f-string interpolation to build a SQL query, which is vulnerable to SQL injection attacks. An attacker could manipulate the user_id parameter to execute arbitrary SQL commands."
 }

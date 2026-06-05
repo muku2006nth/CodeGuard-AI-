@@ -12,6 +12,7 @@ from app.schemas.analysis import (
     FindingResponse,
     HealthResponse,
     MLScoreResponse,
+    RagChunkResponse,
     ReportDetailResponse,
     ReportSummary,
     UploadResponse,
@@ -32,6 +33,12 @@ def _report_to_response(report_dict: dict) -> AnalyzeResponse:
         FindingResponse(**f) if isinstance(f, dict) else f
         for f in report_dict.get("findings", [])
     ]
+    # Map RAG chunks to response schema
+    rag_chunks = [
+        RagChunkResponse(**rc) if isinstance(rc, dict) else rc
+        for rc in report_dict.get("rag_chunks", [])
+    ]
+
     return AnalyzeResponse(
         report_id=report_dict["report_id"],
         risk_score=report_dict["risk_score"],
@@ -47,6 +54,11 @@ def _report_to_response(report_dict: dict) -> AnalyzeResponse:
         ),
         language=report_dict.get("language", "unknown"),
         latency_seconds=report_dict.get("latency_seconds", 0),
+        rag_chunks=rag_chunks,
+        rag_no_match=report_dict.get("rag_no_match", True),
+        fixed_code=report_dict.get("fixed_code", ""),
+        cve_refs=report_dict.get("cve_refs", []),
+        ai_explanation=report_dict.get("ai_explanation", ""),
     )
 
 
