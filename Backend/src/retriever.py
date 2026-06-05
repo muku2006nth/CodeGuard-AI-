@@ -48,7 +48,7 @@ COLLECTION_NAME: str = "security_kb"
 DEFAULT_PERSIST_DIR: str = "data/chroma_db"
 """Default ChromaDB storage path."""
 
-DEFAULT_SIMILARITY_THRESHOLD: float = 0.7
+DEFAULT_SIMILARITY_THRESHOLD: float = 0.5
 """Minimum cosine similarity score for a chunk to be considered relevant."""
 
 logger = logging.getLogger(__name__)
