@@ -35,6 +35,7 @@ async def get_current_user(credentials: Annotated[HTTPAuthorizationCredentials, 
             )
         return UserContext(id=user_response.user.id, token=token)
     except Exception as e:
+        print(f"Auth error: {type(e).__name__} - {str(e)}")
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Could not validate credentials",
