@@ -1,4 +1,4 @@
-# CodeGuard-AI-
+# vegil.dev
 
 ## AI Security Code Review Platform
 

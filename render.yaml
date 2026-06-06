@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: codeguard-api
+    name: vegil-api
     env: docker
     rootDir: Backend/backend
     plan: free # Change to a paid plan if memory limits are exceeded by the ML models
