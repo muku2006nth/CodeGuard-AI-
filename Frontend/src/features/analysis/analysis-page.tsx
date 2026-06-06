@@ -13,7 +13,7 @@ import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/componen
 import { RiskGauge } from "@/components/shared/risk-gauge"
 import { SeverityBadge } from "@/components/shared/severity-badge"
 import { AnalyzeResponse, Finding } from "@/types"
-
+import { analyzeCode } from "@/services/api"
 export function AnalysisPage() {
   const [code, setCode] = useState<string>("# Write or paste your code here\n\nimport os\n\ndef get_user_data(user_id):\n    # TODO: fetch from db\n    query = f\"SELECT * FROM users WHERE id = {user_id}\"\n    return query\n")
   const [language, setLanguage] = useState<string>("python")
@@ -41,22 +41,7 @@ export function AnalysisPage() {
     setSelectedFinding(null)
     
     try {
-      const response = await fetch("http://localhost:8000/analyze", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          code,
-          language,
-        }),
-      })
-      
-      if (!response.ok) {
-        throw new Error("Failed to analyze code")
-      }
-      
-      const data: AnalyzeResponse = await response.json()
+      const data = await analyzeCode(code, language)
       setResults(data)
     } catch (error) {
       console.error("Error analyzing code:", error)
@@ -251,7 +236,9 @@ export function AnalysisPage() {
                       <div className="flex gap-2 mt-4 flex-wrap">
                         <SeverityBadge severity={results?.severity || "MEDIUM"} />
                         <Badge variant="outline" className="bg-muted">Risk Score: {results?.risk_score}/100</Badge>
-                        <Badge variant="outline" className="bg-muted">ML Confidence: {Math.round((results?.ml_score.risk_probability || 0) * 100)}%</Badge>
+                        <Badge variant="outline" className={results?.ml_score.is_suspicious ? "bg-red-500/10 text-red-500 border-red-500/30" : "bg-emerald-500/10 text-emerald-500 border-emerald-500/30"}>
+                          Model Prediction: {results?.ml_score.is_suspicious ? "Vulnerable" : "Safe"}
+                        </Badge>
                         {results && !results.rag_no_match ? (
                           <Badge variant="outline" className="bg-emerald-500/10 text-emerald-500 border-emerald-500/30">
                             <Database className="h-3 w-3 mr-1" />
@@ -265,7 +252,10 @@ export function AnalysisPage() {
                         )}
                       </div>
                     </div>
-                    <RiskGauge score={results?.risk_score || 0} size={100} strokeWidth={8} />
+                    <div className="flex gap-8">
+                      <RiskGauge score={results?.risk_score || 0} size={100} strokeWidth={8} label="Risk Score" type="risk" />
+                      <RiskGauge score={Math.round((results?.ml_score.risk_probability || 0) * 100)} size={100} strokeWidth={8} label="ML Confidence" type="confidence" />
+                    </div>
                   </div>
                 </div>
                 

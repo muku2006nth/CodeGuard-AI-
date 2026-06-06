@@ -13,6 +13,9 @@ import {
 
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
+import { useSystemStatus } from "@/hooks/useApi"
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
+import { Badge } from "@/components/ui/badge"
 
 const navItems = [
   { icon: LayoutDashboard, label: "Dashboard", href: "/" },
@@ -80,6 +83,59 @@ export function Sidebar() {
           )
         })}
       </div>
+
+      <div className="mt-8 pt-4 border-t">
+        <SystemHealthPanel />
+      </div>
     </div>
+  )
+}
+
+function SystemHealthPanel() {
+  const { data: status, isLoading } = useSystemStatus()
+
+  return (
+    <Popover>
+      <PopoverTrigger asChild>
+        <Button variant="ghost" className="w-full justify-start text-xs font-medium text-muted-foreground hover:text-foreground">
+          <div className="flex items-center w-full">
+            <span className={cn("mr-2 h-2 w-2 rounded-full", isLoading ? "bg-muted" : status?.backend === "healthy" ? "bg-green-500" : "bg-red-500")} />
+            System Health
+            <span className="ml-auto opacity-50">View Details</span>
+          </div>
+        </Button>
+      </PopoverTrigger>
+      <PopoverContent side="right" align="end" className="w-64 p-4 text-sm bg-card shadow-lg border-border">
+        <h4 className="font-semibold mb-3">Service Status</h4>
+        {isLoading ? (
+          <p className="text-muted-foreground text-xs">Loading status...</p>
+        ) : status ? (
+          <div className="space-y-3">
+            <div className="flex justify-between items-center">
+              <span>Backend API</span>
+              <Badge variant={status.backend === "healthy" ? "default" : "destructive"} className="text-[10px] uppercase">{status.backend}</Badge>
+            </div>
+            <div className="flex justify-between items-center">
+              <span>Database</span>
+              <Badge variant={status.database === "healthy" ? "default" : "destructive"} className="text-[10px] uppercase">{status.database}</Badge>
+            </div>
+            <div className="flex justify-between items-center">
+              <span>CodeBERT ML</span>
+              <Badge variant={status.codebert === "loaded" ? "default" : "secondary"} className="text-[10px] uppercase">{status.codebert}</Badge>
+            </div>
+            <div className="flex justify-between items-center">
+              <span>Semgrep</span>
+              <Badge variant={status.semgrep === "available" ? "default" : "secondary"} className="text-[10px] uppercase">{status.semgrep}</Badge>
+            </div>
+            <div className="flex justify-between items-center">
+              <span>RAG Engine</span>
+              <Badge variant={status.rag === "available" ? "default" : "secondary"} className="text-[10px] uppercase">{status.rag}</Badge>
+            </div>
+          </div>
+        ) : (
+          <p className="text-red-500 text-xs">Unable to load system status.</p>
+        )}
+      </PopoverContent>
+    </Popover>
   )
 }

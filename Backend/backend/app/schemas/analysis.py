@@ -83,9 +83,37 @@ class HealthResponse(BaseModel):
 class UploadResponse(BaseModel):
     report_id: str
     filename: str
-    message: str
+    language: str = "unknown"
+    latency_seconds: float = 0.0
 
 
 class ReportDetailResponse(BaseModel):
     report_id: str
     payload: dict[str, Any]
+
+
+class DashboardResponse(BaseModel):
+    total_scans: int
+    critical_findings: int
+    high_findings: int
+    medium_findings: int
+    low_findings: int
+    average_risk_score: float
+    recent_scans: list[ReportSummary]
+    trend_data: list[dict[str, Any]]
+    severity_distribution: list[dict[str, Any]]
+
+
+class StatisticsResponse(BaseModel):
+    vulnerability_counts: dict[str, int]
+    risk_trends: list[dict[str, Any]]
+    languages: dict[str, int]
+    top_categories: list[dict[str, Any]]
+
+
+class SystemStatusResponse(BaseModel):
+    backend: str
+    codebert: str
+    semgrep: str
+    rag: str
+    database: str

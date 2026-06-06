@@ -7,11 +7,13 @@ from pathlib import Path
 
 from dotenv import load_dotenv
 
-# backend/app/utils/config.py -> repo root is parents[3]
+# backend/app/utils/config.py -> repo root is parents[2]
 BACKEND_ROOT = Path(__file__).resolve().parents[2]
 REPO_ROOT = BACKEND_ROOT.parent
 
-load_dotenv(REPO_ROOT / ".env")
+# Load .env files — local one takes priority
+load_dotenv(REPO_ROOT / ".env", override=True)
+load_dotenv(BACKEND_ROOT / ".env", override=True)
 
 ML_PROVIDER = os.getenv("ML_PROVIDER", "mock").lower()
 _codebert_env = os.getenv("CODEBERT_MODEL_PATH", "models/codebert-vuln")

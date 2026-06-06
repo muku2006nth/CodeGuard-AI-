@@ -1,53 +1,60 @@
-"""In-memory + filesystem report persistence."""
+"""Supabase report persistence."""
 
 from __future__ import annotations
 
 import json
 from datetime import datetime, timezone
-from pathlib import Path
 from typing import Any
 
-from app.utils.config import ensure_reports_dir
-
+from app.security.auth import supabase, SUPABASE_URL, SUPABASE_KEY
+from supabase import create_client, ClientOptions
 
 class ReportStore:
     def __init__(self) -> None:
-        self._cache: dict[str, dict[str, Any]] = {}
-        self._dir = ensure_reports_dir()
+        pass
 
-    def save(self, report: dict[str, Any]) -> str:
+    def _get_client(self, token: str | None = None):
+        if token and SUPABASE_URL and SUPABASE_KEY:
+            return create_client(
+                SUPABASE_URL,
+                SUPABASE_KEY,
+                options=ClientOptions(headers={'Authorization': f'Bearer {token}'})
+            )
+        return supabase
+
+    def save(self, report: dict[str, Any], user_id: str, token: str | None = None) -> str:
         report_id = report["report_id"]
         report["created_at"] = datetime.now(timezone.utc).isoformat()
-        self._cache[report_id] = report
-        path = self._dir / f"{report_id}.json"
-        path.write_text(json.dumps(report, indent=2), encoding="utf-8")
+        
+        # Save to Supabase
+        client = self._get_client(token)
+        if client:
+            data = {
+                "user_id": user_id,
+                "report_id": report_id,
+                "risk_score": report.get("risk_score", 0),
+                "severity": report.get("severity", "LOW"),
+                "finding_count": len(report.get("findings", [])),
+                "language": report.get("language", "unknown"),
+                "created_at": report["created_at"],
+                "payload": report
+            }
+            client.table("reports").insert(data).execute()
+        
         return report_id
 
-    def get(self, report_id: str) -> dict[str, Any] | None:
-        if report_id in self._cache:
-            return self._cache[report_id]
-        path = self._dir / f"{report_id}.json"
-        if path.exists():
-            data = json.loads(path.read_text(encoding="utf-8"))
-            self._cache[report_id] = data
-            return data
+    def get(self, report_id: str, user_id: str, token: str | None = None) -> dict[str, Any] | None:
+        client = self._get_client(token)
+        if client:
+            response = client.table("reports").select("payload").eq("report_id", report_id).eq("user_id", user_id).execute()
+            if response.data and len(response.data) > 0:
+                return response.data[0]["payload"]
         return None
 
-    def list_reports(self, limit: int = 50) -> list[dict[str, Any]]:
-        items: list[dict[str, Any]] = []
-        for path in sorted(self._dir.glob("*.json"), reverse=True)[:limit]:
-            try:
-                data = json.loads(path.read_text(encoding="utf-8"))
-                items.append(
-                    {
-                        "report_id": data["report_id"],
-                        "risk_score": data.get("risk_score", 0),
-                        "severity": data.get("severity", "LOW"),
-                        "finding_count": len(data.get("findings", [])),
-                        "language": data.get("language", "unknown"),
-                        "created_at": data.get("created_at", ""),
-                    }
-                )
-            except (json.JSONDecodeError, KeyError):
-                continue
-        return items
+    def list_reports(self, user_id: str, limit: int = 50, token: str | None = None) -> list[dict[str, Any]]:
+        client = self._get_client(token)
+        if client:
+            response = client.table("reports").select("report_id, risk_score, severity, finding_count, language, created_at").eq("user_id", user_id).order("created_at", desc=True).limit(limit).execute()
+            if response.data:
+                return response.data
+        return []

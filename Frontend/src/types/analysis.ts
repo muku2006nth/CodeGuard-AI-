@@ -56,3 +56,34 @@ export interface ReportSummary {
   language: string;
   created_at: string;
 }
+
+export interface DashboardResponse {
+  total_scans: number;
+  critical_findings: number;
+  high_findings: number;
+  medium_findings: number;
+  low_findings: number;
+  average_risk_score: number;
+  recent_scans: ReportSummary[];
+  trend_data: { date: string; scans: number }[];
+  severity_distribution: { name: string; value: number }[];
+}
+
+export interface StatisticsResponse {
+  vulnerability_counts: Record<string, number>;
+  risk_trends: { month: string; score: number }[];
+  languages: Record<string, number>;
+  top_categories: { category: string; count: number }[];
+}
+
+export interface SystemStatusResponse {
+  backend: string;
+  codebert: string;
+  semgrep: string;
+  rag: string;
+  database: string;
+}
+
+export interface HistoryResponse {
+  scans: ReportSummary[];
+}

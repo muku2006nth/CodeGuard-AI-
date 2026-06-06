@@ -1,4 +1,5 @@
 import { Bell, Search, User } from "lucide-react"
+import { useAuth } from "@/components/auth/auth-provider"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -12,6 +13,8 @@ import {
 } from "@/components/ui/dropdown-menu"
 
 export function Topbar() {
+  const { user, signOut } = useAuth()
+
   return (
     <header className="flex h-14 items-center gap-4 border-b bg-card px-6">
       <div className="flex flex-1 items-center gap-4">
@@ -40,12 +43,12 @@ export function Topbar() {
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuLabel>My Account</DropdownMenuLabel>
+            <DropdownMenuLabel>{user?.email || "My Account"}</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem>Profile</DropdownMenuItem>
             <DropdownMenuItem>Settings</DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>Logout</DropdownMenuItem>
+            <DropdownMenuItem onClick={signOut} className="cursor-pointer">Logout</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
