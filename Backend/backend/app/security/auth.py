@@ -38,5 +38,5 @@ async def get_current_user(credentials: Annotated[HTTPAuthorizationCredentials, 
         print(f"Auth error: {type(e).__name__} - {str(e)}")
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Could not validate credentials",
+            detail=f"Could not validate credentials: {e}",
         )
