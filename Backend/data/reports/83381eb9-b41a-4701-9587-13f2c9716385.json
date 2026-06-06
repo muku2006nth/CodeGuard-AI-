@@ -1,0 +1,35 @@
+{
+  "report_id": "83381eb9-b41a-4701-9587-13f2c9716385",
+  "risk_score": 9,
+  "severity": "LOW",
+  "findings": [],
+  "summary": "No significant static security issues detected. ML risk signal is low. Continue secure coding practices.",
+  "recommendations": [
+    "No critical findings \u2014 maintain input validation and dependency updates."
+  ],
+  "ml_score": {
+    "risk_probability": 0.4845,
+    "suspicious_score": 0.4845,
+    "is_suspicious": false,
+    "provider": "codebert"
+  },
+  "language": "python",
+  "latency_seconds": 20.7278894999763,
+  "metadata": {
+    "scanners": {
+      "regex": 0,
+      "semgrep": 0,
+      "bandit": 0
+    },
+    "risk_breakdown": {
+      "ml": 0.4845161437988281,
+      "findings": 0
+    }
+  },
+  "rag_chunks": [],
+  "rag_no_match": true,
+  "fixed_code": "",
+  "cve_refs": [],
+  "ai_explanation": "",
+  "created_at": "2026-06-05T15:29:04.398204+00:00"
+}

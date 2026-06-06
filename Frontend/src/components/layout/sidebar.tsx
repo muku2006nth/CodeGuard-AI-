@@ -127,10 +127,7 @@ function SystemHealthPanel() {
               <span>Semgrep</span>
               <Badge variant={status.semgrep === "available" ? "default" : "secondary"} className="text-[10px] uppercase">{status.semgrep}</Badge>
             </div>
-            <div className="flex justify-between items-center">
-              <span>RAG Engine</span>
-              <Badge variant={status.rag === "available" ? "default" : "secondary"} className="text-[10px] uppercase">{status.rag}</Badge>
-            </div>
+
           </div>
         ) : (
           <p className="text-red-500 text-xs">Unable to load system status.</p>

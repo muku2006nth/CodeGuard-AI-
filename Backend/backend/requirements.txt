@@ -14,10 +14,7 @@ python-jose[cryptography]>=3.3.0
 torch>=2.1.0
 transformers>=4.40.0
 
-# RAG layer (all local, no paid APIs)
-chromadb>=0.5.0
-sentence-transformers>=2.7.0
-requests>=2.31.0
+
 
 # Report export
 markdown>=3.5.0

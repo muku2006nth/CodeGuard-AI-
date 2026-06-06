@@ -37,7 +37,7 @@ export function DashboardPage() {
   }
 
   const activeEngines = systemStatus 
-    ? [systemStatus.backend, systemStatus.codebert, systemStatus.semgrep, systemStatus.rag].filter(s => s !== "mock" && s !== "unavailable" && s !== "offline").length
+    ? [systemStatus.backend, systemStatus.codebert, systemStatus.semgrep].filter(s => s !== "mock" && s !== "unavailable" && s !== "offline").length
     : 0;
 
   return (
@@ -87,7 +87,7 @@ export function DashboardPage() {
             <CheckCircle2 className="h-4 w-4 text-severity-low" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{isLoadingSys ? "..." : `${activeEngines} / 4`}</div>
+            <div className="text-2xl font-bold">{isLoadingSys ? "..." : `${activeEngines} / 3`}</div>
             <p className="text-xs text-muted-foreground mt-1">Bandit, Semgrep, Regex, CodeBERT</p>
           </CardContent>
         </Card>

@@ -14,7 +14,7 @@ from app.schemas.analysis import (
     FindingResponse,
     HealthResponse,
     MLScoreResponse,
-    RagChunkResponse,
+
     ReportDetailResponse,
     ReportSummary,
     UploadResponse,
@@ -38,11 +38,6 @@ def _report_to_response(report_dict: dict) -> AnalyzeResponse:
         FindingResponse(**f) if isinstance(f, dict) else f
         for f in report_dict.get("findings", [])
     ]
-    # Map RAG chunks to response schema
-    rag_chunks = [
-        RagChunkResponse(**rc) if isinstance(rc, dict) else rc
-        for rc in report_dict.get("rag_chunks", [])
-    ]
 
     return AnalyzeResponse(
         report_id=report_dict["report_id"],
@@ -59,11 +54,7 @@ def _report_to_response(report_dict: dict) -> AnalyzeResponse:
         ),
         language=report_dict.get("language", "unknown"),
         latency_seconds=report_dict.get("latency_seconds", 0),
-        rag_chunks=rag_chunks,
-        rag_no_match=report_dict.get("rag_no_match", True),
-        fixed_code=report_dict.get("fixed_code", ""),
-        cve_refs=report_dict.get("cve_refs", []),
-        ai_explanation=report_dict.get("ai_explanation", ""),
+
     )
 
 
@@ -256,8 +247,7 @@ def get_statistics(user: UserContext = Depends(get_current_user)):
 
 @router.get("/system-status", response_model=SystemStatusResponse)
 def get_system_status():
-    from app.services.analyzer import RAG_AVAILABLE
-    
+
     backend_status = "healthy"
     database_status = "healthy"
     
@@ -268,13 +258,13 @@ def get_system_status():
         codebert_status = "mock"
         
     semgrep_status = "available" # Assuming semgrep is installed
-    rag_status = "available" if RAG_AVAILABLE else "unavailable"
+
     
     return SystemStatusResponse(
         backend=backend_status,
         codebert=codebert_status,
         semgrep=semgrep_status,
-        rag=rag_status,
+
         database=database_status,
     )
 

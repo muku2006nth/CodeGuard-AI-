@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import { Play, Code2, AlertTriangle, ShieldCheck, Bug, Search, Brain, Circle, Database, Sparkles, BookOpen, ExternalLink } from "lucide-react"
+import { Play, Code2, AlertTriangle, ShieldCheck, Bug, Search, Brain, Circle, Database } from "lucide-react"
 import Editor from "@monaco-editor/react"
 
 import { Button } from "@/components/ui/button"
@@ -197,21 +197,6 @@ export function AnalysisPage() {
                     </p>
                   )}
 
-                  {/* Step 5: LLaMA-3 Fix Generation */}
-                  {currentStep > 4 ? (
-                    <p className="flex items-center gap-2.5 text-emerald-500 font-medium transition-colors duration-200">
-                      <CheckCircle /> LLaMA-3 Fix Generation (Completed)
-                    </p>
-                  ) : currentStep === 4 ? (
-                    <p className="flex items-center gap-2.5 text-primary font-medium">
-                      <Sparkles className="h-4 w-4 animate-pulse text-primary" /> LLaMA-3 Fix Generation (Running...)
-                    </p>
-                  ) : (
-                    <p className="flex items-center gap-2.5 opacity-40">
-                      <Sparkles className="h-4 w-4" /> LLaMA-3 Fix Generation (Pending)
-                    </p>
-                  )}
-
                   {/* Step 6: Risk Assessment Engine */}
                   {currentStep === 5 ? (
                     <p className="flex items-center gap-2.5 text-primary font-medium">
@@ -239,17 +224,7 @@ export function AnalysisPage() {
                         <Badge variant="outline" className={results?.ml_score.is_suspicious ? "bg-red-500/10 text-red-500 border-red-500/30" : "bg-emerald-500/10 text-emerald-500 border-emerald-500/30"}>
                           Model Prediction: {results?.ml_score.is_suspicious ? "Vulnerable" : "Safe"}
                         </Badge>
-                        {results && !results.rag_no_match ? (
-                          <Badge variant="outline" className="bg-emerald-500/10 text-emerald-500 border-emerald-500/30">
-                            <Database className="h-3 w-3 mr-1" />
-                            RAG: {results.rag_chunks.length} chunks
-                          </Badge>
-                        ) : (
-                          <Badge variant="outline" className="bg-amber-500/10 text-amber-500 border-amber-500/30">
-                            <Database className="h-3 w-3 mr-1" />
-                            RAG: No Match
-                          </Badge>
-                        )}
+
                       </div>
                     </div>
                     <div className="flex gap-8">
@@ -265,14 +240,7 @@ export function AnalysisPage() {
                       <TabsTrigger value="findings" className="rounded-none border-b-2 border-transparent px-4 py-2 data-[state=active]:border-primary data-[state=active]:bg-transparent data-[state=active]:shadow-none">
                         Findings ({results?.findings.length})
                       </TabsTrigger>
-                      <TabsTrigger value="ai-fix" className="rounded-none border-b-2 border-transparent px-4 py-2 data-[state=active]:border-primary data-[state=active]:bg-transparent data-[state=active]:shadow-none">
-                        <Sparkles className="h-3.5 w-3.5 mr-1.5" />
-                        AI Fix
-                      </TabsTrigger>
-                      <TabsTrigger value="rag-context" className="rounded-none border-b-2 border-transparent px-4 py-2 data-[state=active]:border-primary data-[state=active]:bg-transparent data-[state=active]:shadow-none">
-                        <Database className="h-3.5 w-3.5 mr-1.5" />
-                        RAG Context
-                      </TabsTrigger>
+
                       <TabsTrigger value="summary" className="rounded-none border-b-2 border-transparent px-4 py-2 data-[state=active]:border-primary data-[state=active]:bg-transparent data-[state=active]:shadow-none">
                         Executive Summary
                       </TabsTrigger>
@@ -325,139 +293,6 @@ export function AnalysisPage() {
                     </ScrollArea>
                   </TabsContent>
 
-                  {/* ===== AI Fix Tab ===== */}
-                  <TabsContent value="ai-fix" className="flex-1 overflow-hidden m-0">
-                    <ScrollArea className="h-full">
-                      <div className="p-6 space-y-6">
-                        {results?.ai_explanation ? (
-                          <>
-                            <div>
-                              <div className="flex items-center gap-2 mb-3">
-                                <Sparkles className="h-5 w-5 text-amber-400" />
-                                <h3 className="text-lg font-semibold">AI-Generated Explanation</h3>
-                              </div>
-                              <div className="bg-slate-900/30 rounded-lg p-4 border border-border/30">
-                                <p className="text-sm leading-relaxed text-muted-foreground whitespace-pre-wrap">{results.ai_explanation}</p>
-                              </div>
-                            </div>
-
-                            {results.fixed_code && (
-                              <>
-                                <Separator />
-                                <div>
-                                  <div className="flex items-center gap-2 mb-3">
-                                    <Code2 className="h-5 w-5 text-emerald-400" />
-                                    <h3 className="text-lg font-semibold">Suggested Fix</h3>
-                                  </div>
-                                  <div className="rounded-lg overflow-hidden border border-border/30">
-                                    <Editor
-                                      height="300px"
-                                      language={results.language || language}
-                                      theme="vs-dark"
-                                      value={results.fixed_code}
-                                      options={{
-                                        readOnly: true,
-                                        minimap: { enabled: false },
-                                        fontSize: 13,
-                                        fontFamily: "'JetBrains Mono', monospace",
-                                        padding: { top: 12 },
-                                        scrollBeyondLastLine: false,
-                                        lineNumbers: "on",
-                                      }}
-                                    />
-                                  </div>
-                                </div>
-                              </>
-                            )}
-
-                            {results.cve_refs.length > 0 && (
-                              <>
-                                <Separator />
-                                <div>
-                                  <div className="flex items-center gap-2 mb-3">
-                                    <BookOpen className="h-5 w-5 text-blue-400" />
-                                    <h3 className="text-lg font-semibold">CVE / OWASP References</h3>
-                                  </div>
-                                  <div className="flex flex-wrap gap-2">
-                                    {results.cve_refs.map((ref, i) => (
-                                      <Badge key={i} variant="outline" className="bg-blue-500/10 text-blue-400 border-blue-500/30">
-                                        <ExternalLink className="h-3 w-3 mr-1" />
-                                        {ref}
-                                      </Badge>
-                                    ))}
-                                  </div>
-                                </div>
-                              </>
-                            )}
-                          </>
-                        ) : (
-                          <div className="flex flex-col items-center justify-center text-center py-16">
-                            <div className="rounded-full bg-muted p-4 mb-4">
-                              <Sparkles className="h-10 w-10 text-muted-foreground" />
-                            </div>
-                            <h3 className="text-lg font-semibold mb-2">No AI Fix Available</h3>
-                            <p className="text-muted-foreground max-w-sm text-sm">
-                              {results?.rag_no_match
-                                ? "The RAG knowledge base did not find a strong match for this code pattern. The AI fix is only generated when relevant OWASP/CVE context is available."
-                                : "The LLM did not return a fix for this analysis. This may happen if the code is already safe or the vulnerability type is not supported."}
-                            </p>
-                          </div>
-                        )}
-                      </div>
-                    </ScrollArea>
-                  </TabsContent>
-
-                  {/* ===== RAG Context Tab ===== */}
-                  <TabsContent value="rag-context" className="flex-1 overflow-hidden m-0">
-                    <ScrollArea className="h-full">
-                      <div className="p-6 space-y-4">
-                        {results && results.rag_chunks.length > 0 ? (
-                          <>
-                            <p className="text-sm text-muted-foreground mb-2">
-                              The following knowledge-base chunks were retrieved and used to ground the AI analysis.
-                            </p>
-                            {results.rag_chunks.map((chunk, i) => (
-                              <Card key={i} className="border-border/40">
-                                <CardHeader className="p-4 pb-2">
-                                  <div className="flex items-center justify-between">
-                                    <div className="flex items-center gap-2">
-                                      <Badge variant="outline" className="text-xs">
-                                        {chunk.source}
-                                      </Badge>
-                                      {chunk.cve_id && (
-                                        <Badge variant="outline" className="bg-blue-500/10 text-blue-400 border-blue-500/30 text-xs">
-                                          {chunk.cve_id}
-                                        </Badge>
-                                      )}
-                                      <SeverityBadge severity={chunk.severity || "MEDIUM"} />
-                                    </div>
-                                    <Badge variant="outline" className="bg-emerald-500/10 text-emerald-400 border-emerald-500/30 text-xs font-mono">
-                                      Score: {(chunk.score * 100).toFixed(1)}%
-                                    </Badge>
-                                  </div>
-                                </CardHeader>
-                                <CardContent className="p-4 pt-2">
-                                  <p className="text-sm text-muted-foreground leading-relaxed whitespace-pre-wrap">
-                                    {chunk.text.length > 500 ? chunk.text.slice(0, 500) + "..." : chunk.text}
-                                  </p>
-                                </CardContent>
-                              </Card>
-                            ))}
-                          </>
-                        ) : (
-                          <div className="flex flex-col items-center justify-center text-center py-16">
-                            <div className="rounded-full bg-muted p-4 mb-4">
-                              <Database className="h-10 w-10 text-muted-foreground" />
-                            </div>
-                            <h3 className="text-lg font-semibold mb-2">No RAG Chunks Retrieved</h3>
-                            <p className="text-muted-foreground max-w-sm text-sm">
-                              No knowledge-base entries exceeded the similarity threshold for this code. Ensure the ChromaDB has been populated by running <code className="bg-muted px-1.5 py-0.5 rounded text-xs">python -m src.ingest</code> on the backend.
-                            </p>
-                          </div>
-                        )}
-                      </div>
-                    </ScrollArea>
-                  </TabsContent>
 
                   {/* ===== Executive Summary Tab ===== */}
                   <TabsContent value="summary" className="flex-1 overflow-hidden m-0">

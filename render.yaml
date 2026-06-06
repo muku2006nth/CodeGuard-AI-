@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: codeguard-api
+    env: docker
+    rootDir: Backend/backend
+    plan: free # Change to a paid plan if memory limits are exceeded by the ML models
+    healthCheckPath: /health
+    envVars:
+      - key: SUPABASE_URL
+        sync: false # Set this in the Render dashboard
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        sync: false # Set this in the Render dashboard
+      - key: FRONTEND_URL
+        value: "*" # Or your production frontend URL (e.g. https://my-frontend.vercel.app)

@@ -1,7 +1,7 @@
 export interface Finding {
   id: string;
   category: string;
-  severity: string;
+  severity: "CRITICAL" | "HIGH" | "MEDIUM" | "LOW";
   confidence: number;
   line_number: number;
   description: string;
@@ -22,36 +22,24 @@ export interface MLScore {
   provider: string;
 }
 
-export interface RagChunk {
-  text: string;
-  source: string;
-  cve_id: string;
-  severity: string;
-  score: number;
-}
 
 export interface AnalyzeResponse {
   report_id: string;
   risk_score: number;
-  severity: string;
+  severity: "CRITICAL" | "HIGH" | "MEDIUM" | "LOW";
   findings: Finding[];
   summary: string;
   recommendations: string[];
   ml_score: MLScore;
   language: string;
   latency_seconds: number;
-  // RAG-enriched fields
-  rag_chunks: RagChunk[];
-  rag_no_match: boolean;
-  fixed_code: string;
-  cve_refs: string[];
-  ai_explanation: string;
+
 }
 
 export interface ReportSummary {
   report_id: string;
   risk_score: number;
-  severity: string;
+  severity: "CRITICAL" | "HIGH" | "MEDIUM" | "LOW";
   finding_count: number;
   language: string;
   created_at: string;
@@ -80,7 +68,7 @@ export interface SystemStatusResponse {
   backend: string;
   codebert: string;
   semgrep: string;
-  rag: string;
+
   database: string;
 }
 

@@ -37,14 +37,7 @@ class FindingResponse(BaseModel):
     secure_example: str = ""
 
 
-class RagChunkResponse(BaseModel):
-    """A single RAG knowledge-base chunk returned by the retriever."""
 
-    text: str = ""
-    source: str = ""
-    cve_id: str = ""
-    severity: str = ""
-    score: float = 0.0
 
 
 class AnalyzeResponse(BaseModel):
@@ -57,12 +50,7 @@ class AnalyzeResponse(BaseModel):
     ml_score: MLScoreResponse
     language: str
     latency_seconds: float
-    # --- RAG-enriched fields ---
-    rag_chunks: list[RagChunkResponse] = Field(default_factory=list)
-    rag_no_match: bool = True
-    fixed_code: str = ""
-    cve_refs: list[str] = Field(default_factory=list)
-    ai_explanation: str = ""
+
 
 
 class ReportSummary(BaseModel):
@@ -115,5 +103,5 @@ class SystemStatusResponse(BaseModel):
     backend: str
     codebert: str
     semgrep: str
-    rag: str
+
     database: str

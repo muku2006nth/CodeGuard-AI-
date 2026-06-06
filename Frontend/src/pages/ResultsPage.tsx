@@ -98,62 +98,7 @@ export default function ResultsPage() {
         </div>
       </section>
 
-      {/* AI-Generated Fix */}
-      {result.ai_explanation && (
-        <section>
-          <h2 className="text-lg font-semibold mb-2">AI-Generated Fix</h2>
-          <div className="border border-slate-700 rounded-lg p-4 bg-panel/50 space-y-3">
-            <p className="text-slate-300 text-sm whitespace-pre-wrap">{result.ai_explanation}</p>
-            {result.fixed_code && (
-              <pre className="bg-surface p-3 rounded text-xs overflow-x-auto border border-slate-600">
-                <code>{result.fixed_code}</code>
-              </pre>
-            )}
-          </div>
-        </section>
-      )}
 
-      {/* RAG References */}
-      {result.cve_refs && result.cve_refs.length > 0 && (
-        <section>
-          <h2 className="text-lg font-semibold mb-2">RAG References</h2>
-          <div className="flex flex-wrap gap-2">
-            {result.cve_refs.map((ref, i) => (
-              <span
-                key={i}
-                className="inline-block text-sm border border-blue-500/30 bg-blue-500/10 text-blue-400 px-3 py-1 rounded"
-              >
-                {ref}
-              </span>
-            ))}
-          </div>
-        </section>
-      )}
-
-      {/* RAG Chunk Details */}
-      {result.rag_chunks && result.rag_chunks.length > 0 && (
-        <section>
-          <h2 className="text-lg font-semibold mb-2">RAG Knowledge Chunks</h2>
-          <div className="space-y-3">
-            {result.rag_chunks.map((chunk, i) => (
-              <div key={i} className="border border-slate-700 rounded-lg p-4 bg-panel/50">
-                <div className="flex items-center gap-2 mb-2">
-                  <span className="text-xs border border-slate-600 px-2 py-0.5 rounded">{chunk.source}</span>
-                  {chunk.cve_id && (
-                    <span className="text-xs border border-blue-500/30 bg-blue-500/10 text-blue-400 px-2 py-0.5 rounded">{chunk.cve_id}</span>
-                  )}
-                  <span className="text-xs border border-emerald-500/30 bg-emerald-500/10 text-emerald-400 px-2 py-0.5 rounded font-mono">
-                    {(chunk.score * 100).toFixed(1)}%
-                  </span>
-                </div>
-                <p className="text-sm text-slate-300">
-                  {chunk.text.length > 300 ? chunk.text.slice(0, 300) + "..." : chunk.text}
-                </p>
-              </div>
-            ))}
-          </div>
-        </section>
-      )}
 
       <section>
         <button
