@@ -12,7 +12,6 @@ WORKDIR /app
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
     curl \
-    wkhtmltopdf \
     && rm -rf /var/lib/apt/lists/*
 
 # Install python dependencies
