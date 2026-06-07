@@ -18,15 +18,15 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Badge } from "@/components/ui/badge"
 
 const navItems = [
-  { icon: LayoutDashboard, label: "Dashboard", href: "/" },
-  { icon: Code2, label: "Code Analysis", href: "/analyze" },
-  { icon: FileText, label: "Reports", href: "/reports" },
-  { icon: ShieldAlert, label: "Vulnerabilities", href: "/vulnerabilities" },
-  { icon: History, label: "History", href: "/history" },
+  { icon: LayoutDashboard, label: "Dashboard", href: "/dashboard" },
+  { icon: Code2, label: "Code Analysis", href: "/dashboard/analyze" },
+  { icon: FileText, label: "Reports", href: "/dashboard/reports" },
+  { icon: ShieldAlert, label: "Vulnerabilities", href: "/dashboard/vulnerabilities" },
+  { icon: History, label: "History", href: "/dashboard/history" },
 ]
 
 const bottomItems = [
-  { icon: Settings, label: "Settings", href: "/settings" },
+  { icon: Settings, label: "Settings", href: "/dashboard/settings" },
   { icon: BookOpen, label: "Documentation", href: "#" },
   { icon: Info, label: "About", href: "/about" },
 ]
@@ -36,9 +36,11 @@ export function Sidebar() {
 
   return (
     <div className="flex h-screen w-64 flex-col border-r bg-card px-3 py-4">
-      <div className="mb-8 flex items-center px-3">
-        <ShieldAlert className="mr-2 h-6 w-6 text-primary" />
-        <span className="text-lg font-bold tracking-tight">ViGiL.dev</span>
+      <div className="mb-8 px-3">
+        <Link to="/" className="flex items-center hover:opacity-80 transition-opacity">
+          <ShieldAlert className="mr-2 h-6 w-6 text-primary" />
+          <span className="text-lg font-bold tracking-tight">ViGiL.dev</span>
+        </Link>
       </div>
 
       <nav className="flex-1 space-y-2">

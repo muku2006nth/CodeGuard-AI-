@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { Link, useLocation, useParams } from "react-router-dom";
 import FindingsTable from "../components/FindingsTable";
 import RiskGauge from "../components/RiskGauge";
+import { ArrowLeft, Code } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { downloadReportUrl, getReport } from "../services/api";
 import type { AnalyzeResponse } from "../types/analysis";
 
@@ -101,12 +103,14 @@ export default function ResultsPage() {
 
 
       <section>
-        <button
-          className="text-sm text-accent"
+        <Button
+          variant="secondary"
+          size="sm"
           onClick={() => setShowJson(!showJson)}
         >
-          {showJson ? "Hide" : "Show"} JSON
-        </button>
+          <Code className="mr-2 h-4 w-4" />
+          {showJson ? "Hide JSON" : "View Raw JSON"}
+        </Button>
         {showJson && (
           <pre className="mt-2 bg-surface p-4 rounded text-xs overflow-auto max-h-96 border border-slate-700">
             {JSON.stringify(result, null, 2)}
@@ -114,7 +118,14 @@ export default function ResultsPage() {
         )}
       </section>
 
-      <Link to="/analyze" className="text-accent text-sm">← New analysis</Link>
+      <div className="pt-4 pb-8">
+        <Link to="/dashboard/analyze">
+          <Button variant="default">
+            <ArrowLeft className="mr-2 h-4 w-4" />
+            New analysis
+          </Button>
+        </Link>
+      </div>
     </div>
   );
 }

@@ -45,10 +45,9 @@ export function Topbar() {
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>{user?.email || "My Account"}</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>Profile</DropdownMenuItem>
-            <DropdownMenuItem>Settings</DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={signOut} className="cursor-pointer">Logout</DropdownMenuItem>
+            <DropdownMenuItem onClick={signOut} className="cursor-pointer text-red-500 focus:text-red-600 focus:bg-red-500/10">
+              Logout
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>

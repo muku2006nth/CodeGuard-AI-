@@ -8,6 +8,8 @@ import { HistoryPage } from "@/features/history/history-page"
 import { SettingsPage } from "@/features/settings/settings-page"
 import { LoginPage } from "@/features/auth/login-page"
 import { AuthCallback } from "@/features/auth/auth-callback"
+import LandingPage from "@/pages/LandingPage"
+import ResultsPage from "@/pages/ResultsPage"
 import { Toaster } from "@/components/ui/sonner"
 import { AuthProvider, useAuth } from "@/components/auth/auth-provider"
 
@@ -34,16 +36,18 @@ export default function App() {
     <AuthProvider>
       <Router>
         <Routes>
+          <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/auth/callback" element={<AuthCallback />} />
           <Route element={<ProtectedRoute />}>
-            <Route path="/" element={<AppLayout />}>
+            <Route path="/dashboard" element={<AppLayout />}>
               <Route index element={<DashboardPage />} />
               <Route path="analyze" element={<AnalysisPage />} />
               <Route path="reports" element={<ReportsPage />} />
               <Route path="vulnerabilities" element={<VulnerabilitiesPage />} />
               <Route path="history" element={<HistoryPage />} />
               <Route path="settings" element={<SettingsPage />} />
+              <Route path="results/:reportId" element={<ResultsPage />} />
             </Route>
           </Route>
         </Routes>

@@ -16,8 +16,8 @@ export default function RiskGauge({ score, severity }: Props) {
   const offset = circumference - (score / 100) * circumference;
 
   return (
-    <div className="flex flex-col items-center">
-      <svg width="140" height="140" className="-rotate-90">
+    <div className="relative flex flex-col items-center justify-center w-[140px] h-[140px]">
+      <svg width="140" height="140" className="-rotate-90 absolute inset-0">
         <circle cx="70" cy="70" r="54" fill="none" stroke="#334155" strokeWidth="12" />
         <circle
           cx="70"
@@ -31,9 +31,9 @@ export default function RiskGauge({ score, severity }: Props) {
           strokeLinecap="round"
         />
       </svg>
-      <div className="-mt-20 text-center">
-        <div className="text-3xl font-bold">{score}</div>
-        <div className={`text-sm font-semibold ${severityColor[severity] || "text-slate-300"}`}>
+      <div className="relative z-10 flex flex-col items-center justify-center text-center">
+        <div className="text-3xl font-bold leading-none">{score}</div>
+        <div className={`text-[10px] font-bold mt-1.5 tracking-wider uppercase ${severityColor[severity] || "text-slate-300"}`}>
           {severity}
         </div>
       </div>

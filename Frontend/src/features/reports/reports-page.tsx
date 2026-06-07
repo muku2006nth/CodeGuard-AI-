@@ -53,7 +53,7 @@ export function ReportsPage() {
                   {reports?.map((r) => (
                     <tr key={r.report_id} className="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
                       <td className="p-4 align-middle">
-                        <Link to={`/results/${r.report_id}`} className="flex items-center gap-2 text-primary hover:underline">
+                        <Link to={`/dashboard/results/${r.report_id}`} className="flex items-center gap-2 text-primary hover:underline">
                           <FileText className="h-4 w-4" />
                           <span className="font-mono">{r.report_id.slice(0, 8)}</span>
                         </Link>

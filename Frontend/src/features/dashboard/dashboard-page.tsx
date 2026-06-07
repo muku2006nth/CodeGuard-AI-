@@ -157,14 +157,14 @@ export function DashboardPage() {
             <div className="h-[300px] w-full">
               <ResponsiveContainer width="100%" height="100%">
                 <LineChart data={dashboard?.trend_data}>
-                  <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="hsl(var(--muted-foreground)/0.2)" />
+                  <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="var(--muted-foreground)" strokeOpacity={0.2} />
                   <XAxis dataKey="date" stroke="#ffffff" fontSize={12} tickLine={false} axisLine={false} />
                   <YAxis stroke="#ffffff" fontSize={12} tickLine={false} axisLine={false} />
                   <RechartsTooltip 
-                    contentStyle={{ backgroundColor: 'hsl(var(--card))', borderColor: 'hsl(var(--border))', borderRadius: '8px' }}
-                    itemStyle={{ color: 'hsl(var(--foreground))' }}
+                    contentStyle={{ backgroundColor: 'var(--card)', borderColor: 'var(--border)', borderRadius: '8px' }}
+                    itemStyle={{ color: 'var(--foreground)' }}
                   />
-                  <Line type="monotone" dataKey="scans" stroke="hsl(var(--primary))" strokeWidth={2} dot={{ r: 4 }} activeDot={{ r: 6 }} />
+                  <Line type="monotone" dataKey="scans" stroke="var(--primary)" strokeWidth={2} dot={{ r: 4 }} activeDot={{ r: 6 }} />
                 </LineChart>
               </ResponsiveContainer>
             </div>
@@ -189,12 +189,12 @@ export function DashboardPage() {
                     dataKey="value"
                   >
                     {dashboard?.severity_distribution?.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={COLORS[entry.name] || 'hsl(var(--muted-foreground))'} />
+                      <Cell key={`cell-${index}`} fill={COLORS[entry.name] || 'var(--muted-foreground)'} />
                     ))}
                   </Pie>
                   <RechartsTooltip 
-                    contentStyle={{ backgroundColor: 'hsl(var(--card))', borderColor: 'hsl(var(--border))', borderRadius: '8px' }}
-                    itemStyle={{ color: 'hsl(var(--foreground))' }}
+                    contentStyle={{ backgroundColor: 'var(--card)', borderColor: 'var(--border)', borderRadius: '8px' }}
+                    itemStyle={{ color: 'var(--foreground)' }}
                   />
                 </PieChart>
               </ResponsiveContainer>

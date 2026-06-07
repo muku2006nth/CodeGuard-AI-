@@ -44,7 +44,7 @@ export function HistoryPage() {
               <Card className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] shadow-sm hover:shadow-md transition-shadow">
                 <CardContent className="p-4 flex flex-col gap-2">
                   <div className="flex justify-between items-center">
-                    <Link to={`/results/${scan.report_id}`} className="font-semibold text-primary hover:underline">
+                    <Link to={`/dashboard/results/${scan.report_id}`} className="font-semibold text-primary hover:underline">
                       Scan {scan.report_id.slice(0, 8)}
                     </Link>
                     <span className="text-xs text-muted-foreground">{new Date(scan.created_at).toLocaleString()}</span>
