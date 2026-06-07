@@ -90,7 +90,7 @@ export function LoginPage() {
           <div className="login-logo">
             <Shield size={28} />
           </div>
-          <h1 className="login-title">vegil.dev</h1>
+          <h1 className="login-title">ViGiL.dev</h1>
           <p className="login-subtitle">
             {isSignUp
               ? "Create your account to get started"
