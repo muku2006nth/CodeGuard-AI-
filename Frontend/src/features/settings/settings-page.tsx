@@ -2,6 +2,8 @@ import { Switch } from "@/components/ui/switch"
 import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 
+import { Badge } from "@/components/ui/badge"
+
 export function SettingsPage() {
   return (
     <div className="max-w-4xl space-y-8">
@@ -23,12 +25,15 @@ export function SettingsPage() {
             </div>
             <Switch defaultChecked />
           </div>
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between opacity-60">
             <div className="space-y-0.5">
-              <Label className="text-base">Bandit (Python)</Label>
+              <div className="flex items-center gap-2">
+                <Label className="text-base">Bandit (Python)</Label>
+                <Badge variant="secondary" className="text-[10px] uppercase font-semibold">Coming Soon</Badge>
+              </div>
               <p className="text-sm text-muted-foreground">Python AST-based security analysis tool.</p>
             </div>
-            <Switch defaultChecked />
+            <Switch disabled />
           </div>
           <div className="flex items-center justify-between">
             <div className="space-y-0.5">

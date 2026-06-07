@@ -505,27 +505,70 @@ export default function LandingPage() {
         </section>
       </main>
 
-      <footer style={{ borderTop: '1px solid #1e2a3a', backgroundColor: '#08090c', padding: '64px 0 24px' }}>
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8 mb-16">
-            <div>
-              <div style={{ fontWeight: 600, fontSize: '20px', color: '#ffffff', marginBottom: '16px' }}>Vigil.dev</div>
-              <p style={{ color: '#8b949e', fontSize: '14px', maxWidth: '240px' }}>Find vulnerabilities before attackers do.</p>
-            </div>
-            <div className="flex flex-col gap-4">
-              <button onClick={() => handleNavigate('/login')} className="text-left w-fit transition-colors hover:text-white" style={{ color: '#8b949e', fontSize: '14px' }}>Sign In</button>
-              <button onClick={() => handleNavigate('/login')} className="text-left w-fit transition-colors hover:text-white" style={{ color: '#8b949e', fontSize: '14px' }}>Get Started</button>
-              <button onClick={scrollToEngine} className="text-left w-fit transition-colors hover:text-white" style={{ color: '#8b949e', fontSize: '14px' }}>How It Works</button>
-            </div>
-            <div>
-              <p style={{ color: '#8b949e', fontSize: '14px', fontFamily: '"JetBrains Mono", monospace', whiteSpace: 'nowrap' }}>
-                Built with CodeBERT · Semgrep · Regex · FastAPI
+      <footer style={{ backgroundColor: '#08090c' }}>
+        <div style={{ borderTop: '1px solid #1e2a3a', padding: '60px 0' }}>
+          <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-12">
+            <div className="flex flex-col">
+              <div className="flex items-center gap-2 mb-3">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="#00d4ff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M12 8v4" stroke="#00d4ff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  <circle cx="12" cy="16" r="1" fill="#00d4ff"/>
+                </svg>
+                <span style={{ fontWeight: 600, fontSize: '18px', color: '#ffffff' }}>Vigil.dev</span>
+              </div>
+              <p style={{ color: '#8b949e', fontSize: '13px', marginBottom: '24px' }}>
+                Find vulnerabilities before attackers do.
               </p>
+              <div className="flex items-center gap-[16px]">
+                <a href="https://github.com/muku2006nth" target="_blank" rel="noopener noreferrer" className="transition-colors duration-200" style={{ color: '#3d444d' }} onMouseOver={(e) => e.currentTarget.style.color = '#00d4ff'} onMouseOut={(e) => e.currentTarget.style.color = '#3d444d'}>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.03-2.682-.103-.253-.447-1.27.098-2.646 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.376.202 2.394.1 2.646.64.699 1.026 1.591 1.026 2.682 0 3.841-2.337 4.687-4.565 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.161 22 16.416 22 12c0-5.523-4.477-10-10-10z"/></svg>
+                </a>
+                <a href="https://www.linkedin.com/in/mukunthgopi/" target="_blank" rel="noopener noreferrer" className="transition-colors duration-200" style={{ color: '#3d444d' }} onMouseOver={(e) => e.currentTarget.style.color = '#00d4ff'} onMouseOut={(e) => e.currentTarget.style.color = '#3d444d'}>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                </a>
+              </div>
+            </div>
+
+            <div className="flex gap-16">
+              <div className="flex flex-col gap-3">
+                <span style={{ color: '#3d444d', fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 600, marginBottom: '4px' }}>Product</span>
+                <button onClick={() => handleNavigate('/login')} className="text-left w-fit transition-colors hover:text-white" style={{ color: '#8b949e', fontSize: '13px' }}>Sign In</button>
+                <button onClick={() => handleNavigate('/login')} className="text-left w-fit transition-colors hover:text-white" style={{ color: '#8b949e', fontSize: '13px' }}>Get Started</button>
+                <button onClick={scrollToEngine} className="text-left w-fit transition-colors hover:text-white" style={{ color: '#8b949e', fontSize: '13px' }}>How It Works</button>
+              </div>
+              <div className="flex flex-col gap-3">
+                <span style={{ color: '#3d444d', fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 600, marginBottom: '4px' }}>Detection</span>
+                <span style={{ color: '#8b949e', fontSize: '13px', cursor: 'default' }}>SQL Injection</span>
+                <span style={{ color: '#8b949e', fontSize: '13px', cursor: 'default' }}>Command Injection</span>
+                <span style={{ color: '#8b949e', fontSize: '13px', cursor: 'default' }}>Hardcoded Secrets</span>
+              </div>
+            </div>
+
+            <div className="flex flex-col">
+              <span style={{ color: '#3d444d', fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 600, marginBottom: '12px' }}>Built By</span>
+              <a href="https://github.com/muku2006nth" target="_blank" rel="noopener noreferrer" className="group flex items-center gap-3 w-fit">
+                <img src="https://github.com/muku2006nth.png" alt="Mukunth Gopi" style={{ width: '36px', height: '36px', borderRadius: '50%', border: '1px solid #1e2a3a' }} />
+                <div className="flex flex-col">
+                  <span style={{ color: '#ffffff', fontSize: '14px', fontWeight: 500 }} className="group-hover:underline">Mukunth Gopi</span>
+                  <span style={{ color: '#8b949e', fontSize: '12px' }}>@muku2006nth</span>
+                </div>
+              </a>
+              <div style={{ marginTop: '16px', color: '#3d444d', fontSize: '12px', fontFamily: '"JetBrains Mono", monospace' }}>
+                CodeBERT · Semgrep · FastAPI · React · Supabase
+              </div>
             </div>
           </div>
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4 pt-8" style={{ borderTop: '1px solid #1e2a3a' }}>
-            <span style={{ color: '#3d444d', fontSize: '12px' }}>© 2026 Vigil.dev</span>
-            <span style={{ color: '#3d444d', fontSize: '12px' }}>Made by Mukunth</span>
+        </div>
+
+        <div style={{ borderTop: '1px solid #1e2a3a', padding: '20px 0' }}>
+          <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-4">
+            <span style={{ color: '#3d444d', fontSize: '12px' }}>© 2026 Vigil.dev — All rights reserved.</span>
+            <div className="flex items-center gap-2" style={{ color: '#3d444d', fontSize: '12px' }}>
+              <a href="https://github.com/muku2006nth" target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-[#8b949e]">GitHub</a>
+              <span>·</span>
+              <a href="https://www.linkedin.com/in/mukunthgopi/" target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-[#8b949e]">Connect on LinkedIn</a>
+            </div>
           </div>
         </div>
       </footer>
