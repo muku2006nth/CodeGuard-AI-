@@ -2,6 +2,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import LoadingScreen from '@/components/LoadingScreen';
 
 type TerminalLine = {
   text: string;
@@ -206,6 +207,13 @@ const useCountUp = (end: number, duration: number = 2000) => {
 export default function LandingPage() {
   const navigate = useNavigate();
   const [scrolled, setScrolled] = useState(false);
+  const [transitioning, setTransitioning] = useState(false);
+  const [targetPath, setTargetPath] = useState('');
+
+  const handleNavigate = (path: string) => {
+    setTargetPath(path);
+    setTransitioning(true);
+  };
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
@@ -220,7 +228,15 @@ export default function LandingPage() {
   const statSamples = useCountUp(27318, 1500);
 
   return (
-    <div style={{ backgroundColor: '#08090c', minHeight: '100vh', fontFamily: '"Inter", sans-serif', color: '#ffffff' }}>
+    <>
+      {transitioning && (
+        <LoadingScreen 
+          onComplete={() => navigate(targetPath)} 
+          skipBoot={true} 
+          message="ESTABLISHING SECURE SESSION..." 
+        />
+      )}
+      <div style={{ backgroundColor: '#08090c', minHeight: '100vh', fontFamily: '"Inter", sans-serif', color: '#ffffff' }}>
       <style dangerouslySetInnerHTML={{__html: `
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap');
         .custom-scrollbar::-webkit-scrollbar { width: 8px; height: 8px; }
@@ -248,9 +264,9 @@ export default function LandingPage() {
           
           <div className="hidden md:flex items-center gap-8">
             <a href="#" className="transition-colors hover:text-white" style={{ color: '#8b949e', fontWeight: 500 }}>Documentation</a>
-            <button onClick={() => navigate('/login')} className="transition-opacity hover:opacity-80" style={{ color: '#ffffff', fontWeight: 500 }}>Sign In</button>
+            <button onClick={() => handleNavigate('/login')} className="transition-opacity hover:opacity-80" style={{ color: '#ffffff', fontWeight: 500 }}>Sign In</button>
             <button 
-              onClick={() => navigate('/login')}
+              onClick={() => handleNavigate('/login')}
               style={{ backgroundColor: '#00d4ff', color: '#08090c', fontWeight: 600, padding: '10px 20px', borderRadius: '6px' }}
               className="transition-transform hover:scale-105 active:scale-95"
             >
@@ -280,7 +296,7 @@ export default function LandingPage() {
                 </p>
                 <div className="flex flex-col sm:flex-row items-center gap-6 mb-8">
                   <button 
-                    onClick={() => navigate('/login')}
+                    onClick={() => handleNavigate('/login')}
                     style={{ backgroundColor: '#00d4ff', color: '#08090c', fontWeight: 600, padding: '14px 28px', borderRadius: '6px', fontSize: '16px' }}
                     className="w-full sm:w-auto transition-transform hover:scale-105 active:scale-95"
                   >
@@ -479,7 +495,7 @@ export default function LandingPage() {
             <h2 style={{ fontSize: 'clamp(28px, 4vw, 40px)', fontWeight: 700, marginBottom: '16px' }}>Start finding vulnerabilities today.</h2>
             <p style={{ color: '#8b949e', fontSize: '18px', marginBottom: '40px' }}>Free to use. No credit card. Paste your first file in 30 seconds.</p>
             <button 
-              onClick={() => navigate('/login')}
+              onClick={() => handleNavigate('/login')}
               style={{ backgroundColor: '#00d4ff', color: '#08090c', fontWeight: 600, padding: '16px 36px', borderRadius: '6px', fontSize: '18px' }}
               className="transition-transform hover:scale-105 active:scale-95"
             >
@@ -497,8 +513,8 @@ export default function LandingPage() {
               <p style={{ color: '#8b949e', fontSize: '14px', maxWidth: '240px' }}>Find vulnerabilities before attackers do.</p>
             </div>
             <div className="flex flex-col gap-4">
-              <button onClick={() => navigate('/login')} className="text-left w-fit transition-colors hover:text-white" style={{ color: '#8b949e', fontSize: '14px' }}>Sign In</button>
-              <button onClick={() => navigate('/login')} className="text-left w-fit transition-colors hover:text-white" style={{ color: '#8b949e', fontSize: '14px' }}>Get Started</button>
+              <button onClick={() => handleNavigate('/login')} className="text-left w-fit transition-colors hover:text-white" style={{ color: '#8b949e', fontSize: '14px' }}>Sign In</button>
+              <button onClick={() => handleNavigate('/login')} className="text-left w-fit transition-colors hover:text-white" style={{ color: '#8b949e', fontSize: '14px' }}>Get Started</button>
               <button onClick={scrollToEngine} className="text-left w-fit transition-colors hover:text-white" style={{ color: '#8b949e', fontSize: '14px' }}>How It Works</button>
             </div>
             <div>
@@ -514,5 +530,6 @@ export default function LandingPage() {
         </div>
       </footer>
     </div>
+    </>
   );
 }

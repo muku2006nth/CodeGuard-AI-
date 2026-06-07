@@ -8,6 +8,8 @@ import { HistoryPage } from "@/features/history/history-page"
 import { SettingsPage } from "@/features/settings/settings-page"
 import { LoginPage } from "@/features/auth/login-page"
 import { AuthCallback } from "@/features/auth/auth-callback"
+import { useState } from "react"
+import LoadingScreen from "@/components/LoadingScreen"
 import LandingPage from "@/pages/LandingPage"
 import ResultsPage from "@/pages/ResultsPage"
 import { Toaster } from "@/components/ui/sonner"
@@ -32,8 +34,17 @@ function ProtectedRoute() {
 }
 
 export default function App() {
+  const [booting, setBooting] = useState(true)
+
   return (
-    <AuthProvider>
+    <>
+      {booting && (
+        <LoadingScreen
+          onComplete={() => setBooting(false)}
+          skipBoot={false}
+        />
+      )}
+      <AuthProvider>
       <Router>
         <Routes>
           <Route path="/" element={<LandingPage />} />
@@ -54,5 +65,6 @@ export default function App() {
         <Toaster />
       </Router>
     </AuthProvider>
+    </>
   )
 }
