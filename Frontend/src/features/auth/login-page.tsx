@@ -65,18 +65,6 @@ export function LoginPage() {
     }
   }
 
-  const handleOAuthLogin = async (provider: "google" | "github") => {
-    setError(null)
-    const { error } = await supabase.auth.signInWithOAuth({
-      provider,
-      options: {
-        redirectTo: `${window.location.origin}/auth/callback`,
-      },
-    })
-    if (error) {
-      setError(error.message)
-    }
-  }
 
   return (
     <div className="login-page">
